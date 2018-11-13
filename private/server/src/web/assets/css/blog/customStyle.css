@@ -1,0 +1,21 @@
+.content .container .post-detail .bl-post-image {
+    margin-bottom: 15px;
+}
+.content .container .post-desc .ql-size-10px {
+    font-size: 10px;
+}
+.content .container .post-desc .ql-size-18px {
+    font-size: 18px;
+}
+
+.content .container .post-desc .ql-size-24px {
+    font-size: 24px;
+}
+
+.post-image video {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    max-width: 100%;
+};
