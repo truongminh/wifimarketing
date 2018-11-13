@@ -1,0 +1,44 @@
+{
+  "name": "wifinomic-homepage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "copy": "ncp env/.env.example ../dist/homepage/.env.example && ncp package.json ../dist/homepage/package.json && ncp src/web/assets ../dist/homepage/web/assets --limit=16 && ncp src/web/templates ../dist/homepage/web/templates",
+    "ts-build": "tslint --project . && tsc",
+    "clean": "node tool/rimraf/bin ../dist/homepage",
+    "build": "cross-env NODE_ENV=production && npm run clean && npm run ts-build && npm run copy",
+    "lint": "tslint --fix --project tsconfig.json",
+    "start-dist": "cross-env ENV_FILE=env/.env.dev node dist/homepage",
+    "watch": "cross-env ENV_FILE=env/.env.dev nodemon --delay 3 --watch src -e ts --exec ts-node -r tsconfig-paths/register --project tsconfig.json src/index.ts",
+    "test": "cross-env ENV_FILE=env/.env.test mocha --bail --file src/index.spec.ts --require ts-node/register -r tsconfig-paths/register src/**/*.spec.ts",
+    "test-file": "cross-env ENV_FILE=env/.env.test mocha --bail --file src/index.spec.ts --require ts-node/register -r tsconfig-paths/register"
+  },
+  "dependencies": {
+    "boom": "7.x.x",
+    "dotenv": "6.x.x",
+    "good": "8.1.1",
+    "good-console": "7.1.0",
+    "good-squeeze": "5.1.0",
+    "handlebars": "4.0.12",
+    "hapi": "17.x.x",
+    "inert": "5.x.x",
+    "joi": "13.x.x",
+    "module-alias": "2.1.0",
+    "vision": "5.4.0"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/hapi": "17.6.2",
+    "@types/node": "10.12.0",
+    "@types/vision": "5.3.5",
+    "cross-env": "5.2.0",
+    "ncp": "2.0.0",
+    "nodemon": "1.18.5",
+    "ts-node": "7.0.1",
+    "tsconfig-paths": "3.6.0",
+    "tslint": "5.11.0",
+    "typescript": "3.1.3"
+  }
+}
