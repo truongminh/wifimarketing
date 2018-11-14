@@ -1,0 +1,28 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+      "baseUrl": "./",
+      "outDir": "../dist/server",
+      "sourceMap": true,
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "target": "es2017",
+      "typeRoots": [
+        "node_modules/@types",
+        "typings"
+      ],
+      "paths": {
+        "@service/*": ["src/service/*"],
+        "@common/*": ["src/common/*"],
+        "@api/*": ["src/api/*"],
+        "@auth/*": ["src/auth/*"],
+        "@lib/*": ["src/lib/*"],
+        "@src/*": ["src/*"]
+      }
+    },
+    "include": [
+      "src",
+      "typings"
+    ]
+}
+  
