@@ -56,6 +56,20 @@ async function SetAssetHandle(server: Server) {
             });
         },
     });
+
+    const metaFolder = Path.join(assetFolder, 'meta');
+    server.route({
+        method: 'GET',
+        path: '/robot.txt',
+        options: {
+            auth: false,
+        },
+        handler(req, h) {
+            return h.file('robot.txt', {
+                confine: metaFolder,
+            });
+        },
+    });
 }
 
 export async function SetRender(server: Server) {
