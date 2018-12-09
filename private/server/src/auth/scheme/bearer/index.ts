@@ -38,11 +38,13 @@ export async function AddBearerStrategy(
     server.auth.strategy(name, AuthBearer.SchemeName, apiAuthOptions);
     // web
     const config = await GetConfig(server);
+    const { base_url } = config.server;
     const redirect = (request: Request) => {
-        const url = (request.url.protocol || 'http')
-            + '://'
-            + request.info.host
-            + request.url.path;
+        const protocol = request.headers['x-forwarded-proto'] || request.url.protocol || 'http';
+        const [_, via] = (request.headers['via'] || '').split(' ');
+        const host = (via || '').trim() || request.info.host;
+        const path = `${base_url}${request.url.path.substr(1)}`;
+        const url = `${protocol}://${host}${path}`;
         return `${config.server.base_url}login?redirect=${encodeURIComponent(url)}`;
     };
     const webAuthOptions: AuthBearer.IAuthBearerOption = {
