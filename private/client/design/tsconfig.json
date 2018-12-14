@@ -1,0 +1,24 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist",
+    "sourceMap": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "target": "es2017",
+    "typeRoots": [
+      "node_modules/@types", 
+      "typings"
+    ],
+    "paths": {
+      "@render/*": ["src/render/*"],
+      "@src/*": ["src/*"],
+    }
+  },
+  "include": [
+    "src",
+    "typings"
+  ]
+}

@@ -1,5 +1,5 @@
 import { GetSessionUser } from '@auth/service';
-import { IContentCreate, IContentUpdate } from '@service/contents';
+import { NSContent } from '@service/contents';
 import { Server } from 'hapi';
 import * as Joi from 'joi';
 import { GetContentRepo } from './content_context';
@@ -19,7 +19,7 @@ export async function SetContentsApiRoutes(server: Server) {
         },
         handler(request, h) {
             const { org_id } = GetSessionUser(request);
-            const payload = request.payload as IContentCreate;
+            const payload = request.payload as NSContent.ICreate;
             payload.org_id = org_id;
             return repo.Create(payload);
         },
@@ -52,9 +52,6 @@ export async function SetContentsApiRoutes(server: Server) {
                 payload: {
                     name: Joi.string().min(3).optional()
                         .error((e) => 'Content name must be at least 3 characters'),
-                    pages: Joi.array().items({
-                        elements: Joi.array().optional(),
-                    }),
                     viewport: Joi.object({
                         width: Joi.number().required(),
                         height: Joi.number().required(),
@@ -64,8 +61,53 @@ export async function SetContentsApiRoutes(server: Server) {
         },
         handler(request, h) {
             const { id } = request.params;
-            const payload = request.payload as IContentUpdate;
+            const payload = request.payload as NSContent.IUpdate;
             return repo.Update(id, payload);
+        },
+    });
+
+    server.route({
+        path: '/api/contents/{id}/pages',
+        method: 'POST',
+        options: {
+            validate: {
+                params: {
+                    id: Joi.string().required().error((e) => 'id is required'),
+                },
+                payload: {
+                    added: Joi.object(),
+                    updated: Joi.object(),
+                    removed: Joi.object()
+                },
+            },
+        },
+        handler(request, h) {
+            const { id } = request.params;
+            const payload = request.payload as NSContent.IPageDiff;
+            return repo.UpdatePages(id, payload);
+        },
+    });
+
+    server.route({
+        path: '/api/contents/{id}/pages/{page_id}/nodes',
+        method: 'POST',
+        options: {
+            validate: {
+                params: {
+                    id: Joi.string(),
+                    page_id: Joi.string(),
+                },
+                payload: {
+                    added: Joi.object(),
+                    updated: Joi.object(),
+                    removed: Joi.object()
+                },
+            },
+        },
+        handler(request, h) {
+            const { id, page_id } = request.params;
+            const payload = request.payload as NSContent.INodeDiff;
+            return repo.UpdateNodes(id, page_id, payload);
         },
     });
 
