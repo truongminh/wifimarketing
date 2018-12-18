@@ -1,7 +1,14 @@
 import { GetWNodeActive } from "@render/stage";
 import { Context } from "@src/core";
 
-export class BaseTool {
+
+export interface ITool {
+    Show(): void;
+    Hide(): void;
+    IsShown(): boolean;
+}
+
+export class BaseTool implements ITool {
     protected wnodeActive = GetWNodeActive(this.ctx);
     protected get wnode() {
         return this.wnodeActive.value;
@@ -22,9 +29,12 @@ export class BaseTool {
     }
 
     Hide() {
-        if (this.el.style.display !== 'none') {
+        if (this.IsShown()) {
             this.el.style.display = 'none';
         }
     }
-    
+
+    IsShown() {
+        return this.el.style.display !== 'none';
+    }
 }

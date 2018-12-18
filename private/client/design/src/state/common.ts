@@ -30,10 +30,16 @@ export interface INodeInput extends IBase {
 
 export interface INodeButton extends IBase {
     type: 'button';
+    text: string;
 }
 
 export interface INodeImage extends IBase {
     type: 'image';
+    src: string;
+}
+
+export interface INodeVideo extends IBase {
+    type: 'video';
     src: string;
 }
 
@@ -43,4 +49,7 @@ export interface INodeLogin extends IBase {
     text: string;
 }
 
-export type INode = INodeText | INodeLogin;
+export type INode =
+    INodeText | INodeLogin |
+    INodeButton |
+    INodeImage | INodeVideo;

@@ -2,13 +2,13 @@ import { Subscription } from "rxjs";
 import { Context } from "@src/core";
 import { GetPageState, IPage, INodeDiff, INode } from "@src/state";
 import { GetStencil } from "@render/sidebar";
-import { ToolboxManager } from "@render/node/edit";
 import { GetNodeData, NewNode } from "./node";
+import { ToolboxContainer } from "./toolbox";
 
 export class StageManager {
     private pageState = GetPageState(this.ctx);
     private subList: Subscription[] = [];
-    private toolboxManager: ToolboxManager;
+    private toolbox: ToolboxContainer;
     private nodes = new Map<string, HTMLElement>();
     private holder = document.createElement('div');
 
@@ -16,7 +16,7 @@ export class StageManager {
         private container: HTMLElement,
         private ctx: Context
     ) {
-        this.toolboxManager = new ToolboxManager(this.container, this.ctx);
+        this.toolbox = new ToolboxContainer(this.container, this.ctx);
         this.container.append(this.holder);
 
         this.subList.push(this.pageState.rxNodeDiff.subscribe(diff => {
@@ -43,14 +43,14 @@ export class StageManager {
     SetActive(id: string) {
         const el = this.nodes.get(id);
         if (el) {
-            this.toolboxManager.SetActive(el);
+            this.toolbox.SetActive(el);
         }
     }
 
     private Reset(page: IPage) {
         this.nodes.forEach(n => n.remove());
         this.nodes.clear();
-        this.toolboxManager.SetActive(null);
+        this.toolbox.SetActive(null);
         if (!page || !page.nodes) {
             return;
         }
@@ -70,21 +70,21 @@ export class StageManager {
                 return;
             }
             // left mouse
-            this.toolboxManager.SetActiveAndDrag(el, e);
+            this.toolbox.SetActiveAndDrag(el, e);
         };
         return el;
     }
 
     private handleDiff({ added, removed, updated }: INodeDiff) {
         if (added) {
-            this.toolboxManager.SetActive(this.addNode(added));
+            this.toolbox.SetActive(this.addNode(added));
         }
         if (removed) {
             const element = this.nodes.get(removed.id);
             if (element) {
                 this.container.removeChild(element);
-                if (this.toolboxManager.IsActive(element)) {
-                    this.toolboxManager.SetActive(null);
+                if (this.toolbox.IsActive(element)) {
+                    this.toolbox.SetActive(null);
                 }
             }
         }

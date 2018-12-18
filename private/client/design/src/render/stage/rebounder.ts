@@ -1,4 +1,4 @@
-import { BaseTool } from "./base";
+import { BaseTool } from "@render/node/edit";
 import { Context } from "@src/core";
 
 function NewBall(xSign: 1 | 0 | -1, ySign: 1 | 0 | -1) {

@@ -71,6 +71,5 @@ export class TextAction extends BaseTool {
         this.el.appendChild(s);
         const action = document.createElement('div');
         action.innerHTML = html;
-        this.el.appendChild(action);
     }
 }

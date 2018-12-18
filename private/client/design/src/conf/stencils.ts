@@ -13,6 +13,11 @@ export const StencilRepo = [
         name: 'Facebook', type: 'login',
         auth: 'facebook', text: 'Login with Facebook',
         w: 60, h: 80,
+    },
+    {
+        name: 'Image', type: 'image',
+        src: 'https://via.placeholder.com/150',
+        w: 60, h: 80,
     }
 ] as IStencil[];
 

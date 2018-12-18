@@ -7,14 +7,33 @@ interface IPosition {
     h: number;
 }
 
-
-export interface INodeRender {
-    Render(el: HTMLElement, next: Partial<INode>);
+export interface INodeRender<T extends INode> {
+    Render(next: Partial<T>);
 }
 
-export class BaseRender implements INodeRender {
-    Render(el: HTMLElement, next: Partial<INode>) {
-        PositionRender(el, next);
+export class BaseRender<T extends INode> implements INodeRender<T> {
+    protected inited = false;
+
+    constructor(
+        protected container: HTMLElement
+    ) { 
+        
+    }
+
+    protected init() {
+
+    }
+
+    protected ApplyStyle(el: HTMLElement, next: Partial<T>) {
+        StyleRender(el, next);
+    }
+
+    Render(next: Partial<T>) {
+        if (!this.inited) {
+            this.init();
+            this.inited = true;
+        }
+        PositionRender(this.container, next);
     }
 }
 
@@ -31,9 +50,9 @@ function PositionRender(el: HTMLElement, next: Partial<IPosition>) {
     if (next.h) {
         el.style.height = `${next.h}px`;
     }
-} 
+}
 
-export function StyleRender(el: HTMLElement, next: Partial<INode>) {
+function StyleRender<T extends INode>(el: HTMLElement, next: Partial<T>) {
     // el.style['overflowWrap'] = 'break-word';
     if (next.fontWeight !== undefined) {
         el.style.fontWeight = `${next.fontWeight}`;

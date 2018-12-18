@@ -1,5 +1,6 @@
 import { BaseTool } from "./base";
 import { Context } from "@src/core";
+import { INodeText } from "@src/state";
 
 
 function patchContentEditable(el: HTMLElement) {
@@ -32,7 +33,7 @@ export class TextEditor extends BaseTool {
 
     Show() {
         super.Show();
-        const data = this.wnodeActive.CurrentData;
+        const data = this.wnodeActive.CurrentData as INodeText;
         this.el.textContent = data.text;
         this.el.style.fontWeight = `${data.fontWeight}`;
         this.el.style.fontFamily = data.fontFamily;

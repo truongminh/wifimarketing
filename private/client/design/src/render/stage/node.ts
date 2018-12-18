@@ -1,5 +1,5 @@
 import { INode } from "@src/state";
-import { GetRenderer, INodeRender } from "@render/node/view";
+import { NewRenderer, INodeRender } from "@render/node/view";
 
 const dataSymbol = Symbol('node data');
 
@@ -18,9 +18,9 @@ export function NewNode(node: INode) {
     el.id = node.id;
     el.classList.add('node');
     el.style.position = 'absolute';
-    const renderer = GetRenderer(node);;
+    const renderer = NewRenderer(el, node);;
     el[renderSymbol] = renderer;
-    renderer.Render(el, node);
+    renderer.Render(node);
     SetNodeData(el, node);
     return el;
 }
@@ -28,12 +28,8 @@ export function NewNode(node: INode) {
 const pendingUpdateSymbol = Symbol('node pending update');
 
 export function UpdateNode(el: HTMLElement, next: Partial<INode>) {
-    const renderer = el[renderSymbol] as INodeRender;
-    renderer.Render(el, next);
+    const renderer = el[renderSymbol] as INodeRender<INode>;
+    renderer.Render(next);
     Object.assign(el[dataSymbol], next);
     el[pendingUpdateSymbol] = true;
-}
-
-export function HasPendingUpdate(el: HTMLElement) {
-    return el[pendingUpdateSymbol] as boolean;
 }

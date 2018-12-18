@@ -3,15 +3,17 @@ import { NodeTextRender } from './text';
 import { INode } from '@src/state';
 import { NodeLoginRender } from './login';
 import { INodeRender } from './common';
+import { NodeImageRender } from './image';
 
-export function GetRenderer(node: INode): INodeRender {
+export function NewRenderer(el: HTMLElement, node: INode): INodeRender<INode> {
     switch (node.type) {
-        case 'text':
-            return new NodeTextRender();
         case 'login':
-            return new NodeLoginRender();
+            return new NodeLoginRender(el);
+        case 'image':
+            return new NodeImageRender(el);
+        case 'text':
         default:
-            return new NodeTextRender();
+            return new NodeTextRender(el);
     }
 }
 
