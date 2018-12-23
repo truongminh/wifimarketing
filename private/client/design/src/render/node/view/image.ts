@@ -1,8 +1,10 @@
-import { INodeText, INode, INodeImage } from "@src/state";
+import { INodeImage } from "@src/state";
 import { BaseRender } from "./common";
+import { GetFileService } from "@src/service";
 
 export class NodeImageRender extends BaseRender<INodeImage> {
     private img = document.createElement('img');
+    private fileService = GetFileService(this.ctx);
 
     protected init() {
         Object.assign(this.container.style, {
@@ -18,9 +20,8 @@ export class NodeImageRender extends BaseRender<INodeImage> {
 
     Render(value: Partial<INodeImage>) {
         super.Render(value);
-        this.ApplyStyle(this.container, value);
         if (value.src) {
-            this.img.src = value.src;
+            this.img.src = this.fileService.Link(value.src);
         }
     }
 }

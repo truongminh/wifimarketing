@@ -1,6 +1,7 @@
 import { BaseTool } from "./base";
 import { Context } from "@src/core";
 import { INodeText } from "@src/state";
+import { ApplyTextStyle } from "../view";
 
 
 function patchContentEditable(el: HTMLElement) {
@@ -13,15 +14,15 @@ function patchContentEditable(el: HTMLElement) {
 }
 
 export class TextEditor extends BaseTool {
-    constructor(el: HTMLElement, ctx: Context) {
-        super(el, ctx);
+    constructor(container: HTMLElement, ctx: Context) {
+        super(container, ctx);
         this.el.style.top = '0';
         this.el.style.left = '0';
         this.el.style.right = '0';
         this.el.style.bottom = '0';
         this.el.contentEditable = "true";
         this.el.spellcheck = false;
-        patchContentEditable(el);
+        patchContentEditable(this.el);
         this.el.onkeydown = (e: KeyboardEvent) => {
             e.stopPropagation();
         }

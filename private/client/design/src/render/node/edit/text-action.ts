@@ -63,8 +63,8 @@ const html = `
 `
 
 export class TextAction extends BaseTool {
-    constructor(el: HTMLElement, ctx: Context) {
-        super(el, ctx);
+    constructor(container: HTMLElement, ctx: Context) {
+        super(container, ctx);
         this.el.classList.add('richtoolbar');
         const s = document.createElement('style');
         s.innerHTML = style;

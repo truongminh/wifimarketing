@@ -1,9 +1,9 @@
 import { INodeText, INode } from "@src/state";
-import { BaseRender } from "./common";
+import { BaseRender, ApplyTextStyle } from "./common";
 
 export class NodeTextRender extends BaseRender<INodeText> {
     private child = document.createElement('div');
-    
+
     protected init() {
         Object.assign(this.container.style, {
             overflow: 'hidden',
@@ -21,7 +21,7 @@ export class NodeTextRender extends BaseRender<INodeText> {
 
     Render(value: Partial<INodeText>) {
         super.Render(value);
-        this.ApplyStyle(this.child, value);
+        ApplyTextStyle(this.child, value);
         if (value.text) {
             this.child.textContent = value.text;
         }

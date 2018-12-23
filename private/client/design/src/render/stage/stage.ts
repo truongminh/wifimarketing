@@ -2,7 +2,7 @@ import { Subscription } from "rxjs";
 import { Context } from "@src/core";
 import { GetPageState, IPage, INodeDiff, INode } from "@src/state";
 import { GetStencil } from "@render/sidebar";
-import { GetNodeData, NewNode } from "./node";
+import { GetNodeData, NewNode } from "@render/node";
 import { ToolboxContainer } from "./toolbox";
 
 export class StageManager {
@@ -60,7 +60,7 @@ export class StageManager {
     }
 
     private addNode(node: INode) {
-        const el = NewNode(node);
+        const el = NewNode(node, this.ctx);
         this.container.appendChild(el);
         this.nodes.set(node.id, el);
         el.onmousedown = (e: MouseEvent) => {

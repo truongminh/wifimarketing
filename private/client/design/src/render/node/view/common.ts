@@ -1,4 +1,5 @@
 import { INode } from "@src/state";
+import { Context } from "@src/core";
 
 interface IPosition {
     x: number;
@@ -15,17 +16,14 @@ export class BaseRender<T extends INode> implements INodeRender<T> {
     protected inited = false;
 
     constructor(
-        protected container: HTMLElement
+        protected container: HTMLElement,
+        protected ctx: Context
     ) { 
         
     }
 
     protected init() {
 
-    }
-
-    protected ApplyStyle(el: HTMLElement, next: Partial<T>) {
-        StyleRender(el, next);
     }
 
     Render(next: Partial<T>) {
@@ -52,7 +50,7 @@ function PositionRender(el: HTMLElement, next: Partial<IPosition>) {
     }
 }
 
-function StyleRender<T extends INode>(el: HTMLElement, next: Partial<T>) {
+export function ApplyTextStyle<T extends INode>(el: HTMLElement, next: Partial<T>) {
     // el.style['overflowWrap'] = 'break-word';
     if (next.fontWeight !== undefined) {
         el.style.fontWeight = `${next.fontWeight}`;

@@ -30,6 +30,8 @@ function FetchJson<T>(method: Method, url: string, body?: Body): Promise<T> {
     });
 }
 
+const ErrNetwork = new Error('network');
+
 function Upload<T>(
     url: string,
     form: FormData,
@@ -39,17 +41,19 @@ function Upload<T>(
         const xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
         xhr.open('POST', url, true);
-        xhr.onreadystatechange = (ev) => {
-            if (xhr.readyState === xhr.DONE) {
-                resolve(xhr.responseText);
+        xhr.onloadend = (e) => {
+            if (xhr.status === 0) {
+                reject(ErrNetwork);
+                return;
             }
+            resolve(xhr.responseText);
         }
         if (onprogress) {
-            xhr.onloadend = xhr.onloadstart = xhr.onprogress = (ev) => {
+            xhr.onprogress = (ev) => {
                 onprogress(ev.loaded, ev.total);
             }
         }
-        xhr.onerror = reject;
+        xhr.onabort = xhr.onerror = reject;
         xhr.send(form);
     });
 }

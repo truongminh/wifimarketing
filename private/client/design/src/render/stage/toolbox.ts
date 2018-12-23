@@ -1,8 +1,8 @@
 import { GetWNodeActive } from "@render/stage";
+import { Toolboxes } from "@render/node";
 import { Rebounder } from "./rebounder";
 import { Context } from "@src/core";
 import { GetPageState } from "@src/state";
-import { Toolboxes } from "@render/node/edit";
 
 const enum EditMode {
     None,
@@ -24,9 +24,7 @@ export class ToolboxContainer {
             w: this.stage.offsetWidth,
             h: this.stage.offsetHeight
         };
-        const reboundContainer = document.createElement('div');
-        const rebounder = new Rebounder(reboundContainer, this.ctx, bounds);
-        this.container.append(reboundContainer);
+        const rebounder = new Rebounder(this.container, this.ctx, bounds);
         return rebounder;
     })();
 
@@ -85,19 +83,22 @@ export class ToolboxContainer {
         if (mode === EditMode.None) {
             this.container.style.display = 'none';
             this.rebounder.Hide();
-            this.wnodeActive.next(null);
             this.tools.None();
-        } else if (mode === EditMode.Normal) {
             this.wnodeActive.Visible(true);
+            this.wnodeActive.next(null);
+        } else if (mode === EditMode.Normal) {
+            this.rebounder.Show();
+            this.wnodeActive.Visible(true);
+            this.tools.Normal(this.wnodeActive.CurrentData);
             if (this.mode === EditMode.Advanced) {
                 this.wnodeActive.Commit();
             }
-            this.rebounder.Show();
-            this.tools.Normal(this.wnodeActive.CurrentData);
         } else {
-            this.rebounder.Hide();
-            this.wnodeActive.Visible(false);
-            this.tools.Advance(this.wnodeActive.CurrentData);
+            const hasTool = this.tools.Advance(this.wnodeActive.CurrentData);
+            if (hasTool) {
+                this.rebounder.Hide();
+                this.wnodeActive.Visible(false);
+            }
         }
         this.mode = mode;
     }
@@ -112,8 +113,11 @@ export class ToolboxContainer {
             return;
         }
         const current = this.wnodeActive.value;
-        this.wnodeActive.next(el);
         if (el !== current) {
+            // show current
+            this.wnodeActive.Visible(true);
+            this.wnodeActive.next(el);
+            this.tools.Reset();
             this.setMode(EditMode.Normal);
         }
     }

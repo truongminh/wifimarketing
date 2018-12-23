@@ -1,5 +1,7 @@
+
 import { INode } from "@src/state";
-import { NewRenderer, INodeRender } from "@render/node/view";
+import { NewRenderer, INodeRender } from "./view";
+import { Context } from "@src/core";
 
 const dataSymbol = Symbol('node data');
 
@@ -13,12 +15,12 @@ export function GetNodeData(el: HTMLElement) {
 
 const renderSymbol = Symbol('node render');
 
-export function NewNode(node: INode) {
+export function NewNode(node: INode, ctx: Context) {
     const el = document.createElement('div');
     el.id = node.id;
     el.classList.add('node');
     el.style.position = 'absolute';
-    const renderer = NewRenderer(el, node);;
+    const renderer = NewRenderer(el, ctx, node);;
     el[renderSymbol] = renderer;
     renderer.Render(node);
     SetNodeData(el, node);

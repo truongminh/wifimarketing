@@ -3,6 +3,7 @@ import { ITool } from "./base";
 import { TextEditor } from "./text";
 import { Context } from "@src/core";
 import { TextAction } from "./text-action";
+import { ImageEditor } from "./image";
 
 export const enum ToolName {
     Text,
@@ -12,12 +13,10 @@ export const enum ToolName {
 
 function GetNormalTools(node: INode): ToolName[] {
     switch (node.type) {
-        case 'text':
-        case 'login':
-            return [];
         case 'image':
             return [ToolName.Image];
     }
+    return [];
 }
 
 function GetAdvancedTools(node: INode): ToolName[] {
@@ -25,44 +24,88 @@ function GetAdvancedTools(node: INode): ToolName[] {
         case 'text':
         case 'login':
             return [ToolName.Text, ToolName.TextAction];
-        case 'image':
-            return [ToolName.Image];
     }
+    return [];
 }
+
+interface IToolMaker {
+    new(el: HTMLElement, ctx: Context): ITool;
+}
+
+const Maker = new Map<ToolName, IToolMaker>();
+Maker.set(ToolName.Text, TextEditor);
+Maker.set(ToolName.TextAction, TextAction);
+Maker.set(ToolName.Image, ImageEditor);
+
 
 export class Toolboxes {
     private tools = new Map<ToolName, ITool>();
+    private shown: ToolName[] = [];
 
     constructor(
         private container: HTMLElement,
         private ctx: Context
     ) {
-        const div1 = document.createElement('div');
-        this.tools.set(ToolName.Text, new TextEditor(div1, this.ctx));
-        const div2 = document.createElement('div');
-        this.tools.set(ToolName.TextAction, new TextAction(div2, this.ctx));
-        this.container.append(div1, div2);
+        Maker.forEach((v, k) => {
+            this.tools.set(k, new v(this.container, this.ctx));
+        });
     }
 
+    /**
+     * None: show no tool
+     */
     None() {
         this.changeToolbox();
     }
 
+    /**
+     * Normal: show normal tools
+     * return false if no tool is shown
+     * @param node 
+     */
     Normal(node: INode) {
-        this.changeToolbox(GetNormalTools(node));
+        const values = GetNormalTools(node);
+        this.changeToolbox(values);
+        return values && values.length > 0;
     }
 
+    /**
+     * Advance: show advanced toosl
+     * return false if no tool is shown
+     * @param node 
+     */
     Advance(node: INode) {
-        this.changeToolbox(GetAdvancedTools(node));
+        const values = GetAdvancedTools(node);
+        this.changeToolbox(values);
+        return values && values.length > 0;
+    }
+
+    Reset() {
+        this.shown.forEach(t => {
+            const tool = this.tools.get(t);
+            if (tool) {
+                tool.Reset();
+            }
+        });
     }
 
     private changeToolbox(toolbox: ToolName[] = []) {
-        this.tools.forEach(t => t.Hide());
-        toolbox.forEach((t) => {
-            const tool = this.tools.get(t);
-            if (tool) {
-                tool.Show();
+        this.shown.forEach(t => {
+            if (toolbox.indexOf(t) === -1) {
+                const tool = this.tools.get(t);
+                if (tool) {
+                    tool.Hide();
+                }
             }
         });
+        toolbox.forEach((t) => {
+            if (this.shown.indexOf(t) === -1) {
+                const tool = this.tools.get(t);
+                if (tool) {
+                    tool.Show();
+                }
+            }
+        });
+        this.shown = [...toolbox];
     }
 }

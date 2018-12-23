@@ -1,6 +1,6 @@
 import { BehaviorSubject, Subject, merge, Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { GetNodeData, UpdateNode } from "./node";
+import { GetNodeData, UpdateNode } from "@render/node";
 import { Context } from "@src/core";
 import { GetPageState, INode } from "@src/state"; 
 
@@ -44,8 +44,11 @@ export class NodeActiveSubject extends BehaviorSubject<HTMLElement> {
     }
 
     Visible(b = false) {
+        if (!this.value) {
+            return;
+        }
         if (b) {
-            this.value.style.display = 'block';
+            this.value.style.display = 'table';
         } else {
             this.value.style.display = 'none';
         }

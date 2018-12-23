@@ -3,7 +3,8 @@ import { IFile } from "@src/state";
 
 export interface IFileService {
     List(): Promise<IFile[]>;
-    Upload(file: File, onprogress?: (p: number) => void): Promise<string>;
+    Link(src: string): string;
+    Upload(file: File, onprogress?: (loaded: number, total: number) => void): Promise<string>;
 }
 
 const fileServiceSymbol = Symbol('file-service');

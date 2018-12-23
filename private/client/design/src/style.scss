@@ -128,6 +128,8 @@ ol, ul {
             bottom: 20px;
             position: absolute;
             background-color: #fff;
+            user-select: none;
+            -webkit-user-select: none;
             .node {
                 box-sizing: border-box;
                 border: 1px solid rgba(0, 0, 0, 0);

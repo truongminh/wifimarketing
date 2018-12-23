@@ -1,5 +1,5 @@
-import { BaseTool } from "@render/node/edit";
 import { Context } from "@src/core";
+import { GetWNodeActive } from "./node-active";
 
 function NewBall(xSign: 1 | 0 | -1, ySign: 1 | 0 | -1) {
     const ball = document.createElement('div');
@@ -48,18 +48,22 @@ interface IBound {
 const DoubleClickMillisecond = 200;
 const LeftMouse = 0;
 
-export class Rebounder extends BaseTool {
+export class Rebounder {
+    private wnodeActive = GetWNodeActive(this.ctx);
+    private el = document.createElement('div');
     onDoubleClick = () => { }
     constructor(
-        el: HTMLElement,
-        ctx: Context,
+        private container: HTMLElement,
+        private ctx: Context,
         private bounds: IBound
     ) {
-        super(el, ctx);
+        this.el.style.position = 'absolute';
+        this.el.style.display = 'none';
         this.el.style.top = '0';
         this.el.style.left = '0';
         this.el.style.right = '0';
         this.el.style.bottom = '0';
+        this.el.style.zIndex = '1';
         this.el.style.border = '1px solid #4169e1';
         this.el.append(...balls.map(b => this.newBall(b[0], b[1])));
         this.el.onmousedown = (e: MouseEvent) => {
@@ -77,6 +81,19 @@ export class Rebounder extends BaseTool {
             this.Hide();
             this.onDoubleClick();
         }
+        this.container.appendChild(this.el);
+    }
+
+    IsShown() {
+        return this.el.style.display !== 'none';
+    }
+
+    Show() {
+        this.el.style.display = 'block';
+    }
+
+    Hide() {
+        this.el.style.display = 'none';
     }
 
     private moveStep: { [index: string]: IBound } = {
@@ -161,7 +178,7 @@ export class Rebounder extends BaseTool {
     }
 
     DragTarget(
-        e: {clientX: number, clientY: number}
+        e: { clientX: number, clientY: number }
     ) {
 
         // get the initla data before first move

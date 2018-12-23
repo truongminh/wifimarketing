@@ -1,10 +1,10 @@
 import { INode, INodeLogin } from "@src/state";
-import { BaseRender } from "./common";
+import { BaseRender, ApplyTextStyle } from "./common";
 
 export class NodeLoginRender extends BaseRender<INodeLogin> {
     Render(value: Partial<INodeLogin>) {
         super.Render(value);
-        this.ApplyStyle(this.container, value);
+        ApplyTextStyle(this.container, value);
         if (value.text) {
             this.container.textContent = value.text;
         }

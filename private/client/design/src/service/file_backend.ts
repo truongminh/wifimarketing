@@ -15,14 +15,16 @@ export class FileServiceBackend implements IFileService {
         return this.api.Get<IFile[]>('');
     }
 
-    async Upload(file: File, onprogress: (p: number) => void) {
+    async Upload(file: File, onprogress: (loaded: number, total: number) => void) {
         const form = new FormData();
         form.set('file', file);
-        return HttpApi.Upload(this.baseUrl, form, (loaded, total) => {
-            if (onprogress) {
-                const p = Math.round(loaded * 10000 / total) / 100;
-                onprogress(p);
-            }
-        });
+        return HttpApi.Upload(this.baseUrl, form, onprogress);
+    }
+    
+    Link(src: string) {
+        if (src.startsWith('http://') || src.startsWith('https://')) {
+            return src;
+        }
+        return `${this.conf.BaseURL}files/${src}`;
     }
 }
