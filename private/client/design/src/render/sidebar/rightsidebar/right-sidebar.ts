@@ -1,8 +1,8 @@
 import { Subscription } from "rxjs";
 import { Context } from "@src/core";
 import { INode } from "@src/state";
-import { GetWNodeActive } from "@render/stage";
-import * as RightSidebarHTML from './right-sidebar.html';
+import { GetWNodeActive } from "@render/node";
+import RightSidebarHTML from './right-sidebar.html';
 import { InputElement, NewControl } from "./input";
 
 export class RightSidebar {

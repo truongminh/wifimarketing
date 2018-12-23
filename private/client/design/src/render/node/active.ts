@@ -1,8 +1,8 @@
 import { BehaviorSubject, Subject, merge, Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { GetNodeData, UpdateNode } from "@render/node";
 import { Context } from "@src/core";
 import { GetPageState, INode } from "@src/state"; 
+import { GetNodeData, UpdateNode } from "./data";
 
 export class NodeActiveSubject extends BehaviorSubject<HTMLElement> {
     private rxUpdate = new Subject<Partial<INode>>();
@@ -48,9 +48,9 @@ export class NodeActiveSubject extends BehaviorSubject<HTMLElement> {
             return;
         }
         if (b) {
-            this.value.style.display = 'table';
+            this.value.classList.remove('hide');
         } else {
-            this.value.style.display = 'none';
+            this.value.classList.add('hide');
         }
     }
 

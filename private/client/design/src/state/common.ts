@@ -11,6 +11,7 @@ interface IBase {
     color: string;
     fontSize: number;
     textDecoration: 'none' | 'underline' | 'line-through';
+    backgroundColor: string;
     fontStyle: 'normal' | 'italic';
     textAlign: 'left' | 'center' | 'right' | 'justify';
     verticalAlign: 'top' | 'middle' | 'bottom';

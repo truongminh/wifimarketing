@@ -1,5 +1,6 @@
 import { Context, BaseContainer } from "@src/core";
-import { GetStageManager, GetWNodeActive } from "@render/stage";
+import { GetStageManager } from "@render/stage";
+import { GetWNodeActive } from "@render/node";
 import { Subscription } from "rxjs";
 
 export class Outline extends BaseContainer {

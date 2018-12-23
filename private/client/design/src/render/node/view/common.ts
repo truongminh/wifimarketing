@@ -18,8 +18,8 @@ export class BaseRender<T extends INode> implements INodeRender<T> {
     constructor(
         protected container: HTMLElement,
         protected ctx: Context
-    ) { 
-        
+    ) {
+
     }
 
     protected init() {
@@ -75,5 +75,8 @@ export function ApplyTextStyle<T extends INode>(el: HTMLElement, next: Partial<T
     }
     if (next.textDecoration !== undefined) {
         el.style.textDecoration = next.textDecoration;
+    }
+    if (next.backgroundColor !== undefined) {
+        el.style.backgroundColor = next.backgroundColor;
     }
 }

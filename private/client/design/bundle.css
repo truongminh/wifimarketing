@@ -1,0 +1,136 @@
+body {
+  height: 100.1%;
+  overflow: hidden;
+  background-color: #f5f5f5;
+  line-height: 1.4;
+  margin: 0; }
+
+ol, ul {
+  list-style: none;
+  padding: 0;
+  margin: 0; }
+
+.hide {
+  display: none !important; }
+
+#topbar {
+  height: 40px;
+  left: 0;
+  top: 0; }
+  #topbar #logo {
+    width: 50px;
+    position: absolute; }
+  #topbar #topbar-left {
+    top: 0px;
+    left: 50px;
+    width: 200px;
+    position: absolute; }
+    #topbar #topbar-left .content-name, #topbar #topbar-left .page-name {
+      font-weight: 600; }
+  #topbar #topbar-center {
+    top: 0px;
+    left: 250px;
+    right: 10em;
+    position: absolute; }
+  #topbar #topbar-right {
+    width: 10em;
+    right: 0;
+    position: absolute; }
+
+#main {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  right: 0;
+  bottom: 0; }
+  #main #sidebar {
+    top: 0;
+    bottom: 0;
+    width: 250px;
+    position: absolute; }
+    #main #sidebar #sidebar-menu {
+      top: 0;
+      width: 50px;
+      height: 100%;
+      position: absolute; }
+      #main #sidebar #sidebar-menu .icon {
+        height: 2.8em;
+        cursor: pointer; }
+        #main #sidebar #sidebar-menu .icon:hover, #main #sidebar #sidebar-menu .icon.active {
+          background-color: #fff; }
+    #main #sidebar #bottom-action {
+      bottom: 0;
+      height: 50%;
+      width: 50px;
+      position: absolute; }
+    #main #sidebar #sidebar-content {
+      top: 0;
+      left: 50px;
+      right: 0;
+      bottom: 0;
+      position: absolute;
+      padding: 10px;
+      background-color: #fff;
+      -webkit-user-select: none; }
+      #main #sidebar #sidebar-content .stencil {
+        border: 1px solid black;
+        margin: 10px;
+        cursor: default; }
+        #main #sidebar #sidebar-content .stencil:hover {
+          background-color: #f5f5f5; }
+      #main #sidebar #sidebar-content .outline-item, #main #sidebar #sidebar-content .page-item {
+        width: 100%;
+        cursor: pointer; }
+        #main #sidebar #sidebar-content .outline-item.active, #main #sidebar #sidebar-content .page-item.active {
+          background-color: #608bf0; }
+        #main #sidebar #sidebar-content .outline-item:hover, #main #sidebar #sidebar-content .page-item:hover {
+          border: 1px solid #aaa; }
+    #main #sidebar #sidebar-resize {
+      top: 0;
+      width: .25em;
+      right: 0;
+      bottom: 0;
+      cursor: ew-resize;
+      position: absolute; }
+  #main #main-content {
+    left: 250px;
+    right: 250px;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    border: 1px solid #d1d1d1; }
+    #main #main-content #stage {
+      top: 20px;
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
+      position: absolute;
+      background-color: #fff;
+      user-select: none;
+      -webkit-user-select: none; }
+      #main #main-content #stage .node {
+        box-sizing: border-box;
+        border: 1px solid rgba(0, 0, 0, 0);
+        cursor: default; }
+        #main #main-content #stage .node:hover {
+          border: 1px solid #4169e1; }
+        #main #main-content #stage .node.focus:hover {
+          border: 1px solid rgba(0, 0, 0, 0); }
+  #main #rightsidebar {
+    top: 0;
+    width: 250px;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    background-color: #fff; }
+    #main #rightsidebar [x-control][active], #main #rightsidebar [x-control] [active] {
+      background-color: #aaa; }
+
+.context-menu {
+  width: 100px; }
+  .context-menu .context-menu-item {
+    border: 1px solid #aaa;
+    cursor: pointer;
+    width: 100%; }
+    .context-menu .context-menu-item:hover {
+      background-color: #608bf0; }

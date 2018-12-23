@@ -1,4 +1,4 @@
-import { GetWNodeActive } from "@render/stage";
+import { GetWNodeActive } from "../active";
 import { Context } from "@src/core";
 
 

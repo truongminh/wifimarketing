@@ -13,8 +13,8 @@ export class NodeImageRender extends BaseRender<INodeImage> {
             minHeight: '1px',
             boxSizing: 'border-box',
         } as CSSStyleDeclaration);
-        this.img.style.width = '100%';
-        this.img.style.height = '100%';
+        this.img.setAttribute('width', '100%');
+        this.img.setAttribute('height', '100%');
         this.container.appendChild(this.img);
     }
 

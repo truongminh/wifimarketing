@@ -14,8 +14,8 @@ export class ImageEditor extends BaseTool {
         super(container, ctx);
         this.el.style.width = '100%';
         this.el.style.height = '100%';
-        this.img.style.width = '100%';
-        this.img.style.height = '100%';
+        this.img.setAttribute('width', '100%');
+        this.img.setAttribute('height', '100%');
         this.src.style.width = '100%';
         this.status.style.position = 'absolute';
         this.status.style.top = '0';

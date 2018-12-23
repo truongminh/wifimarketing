@@ -5,5 +5,5 @@ declare module "*.png" {
 
 declare module "*.html" {
     const content: any;
-    export = content;
+    export default content;
 }

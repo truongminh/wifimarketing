@@ -1,4 +1,4 @@
-import * as colorHtml from './color.html';
+import colorHtml from './color.html';
 
 function hex2rgb(hex: string) {
     return [

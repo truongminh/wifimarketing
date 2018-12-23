@@ -1,5 +1,5 @@
 import { Context } from "@src/core";
-import { GetWNodeActive } from "./node-active";
+import { GetWNodeActive } from "@render/node";
 
 function NewBall(xSign: 1 | 0 | -1, ySign: 1 | 0 | -1) {
     const ball = document.createElement('div');
@@ -59,12 +59,12 @@ export class Rebounder {
     ) {
         this.el.style.position = 'absolute';
         this.el.style.display = 'none';
-        this.el.style.top = '0';
-        this.el.style.left = '0';
-        this.el.style.right = '0';
-        this.el.style.bottom = '0';
+        this.el.style.top = '-2px';
+        this.el.style.left = '-2px';
+        this.el.style.right = '-2px';
+        this.el.style.bottom = '-2px';
         this.el.style.zIndex = '1';
-        this.el.style.border = '1px solid #4169e1';
+        this.el.style.border = '2px dotted #4169e1';
         this.el.append(...balls.map(b => this.newBall(b[0], b[1])));
         this.el.onmousedown = (e: MouseEvent) => {
             e.stopPropagation();

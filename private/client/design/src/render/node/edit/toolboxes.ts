@@ -12,10 +12,6 @@ export const enum ToolName {
 }
 
 function GetNormalTools(node: INode): ToolName[] {
-    switch (node.type) {
-        case 'image':
-            return [ToolName.Image];
-    }
     return [];
 }
 
@@ -24,6 +20,8 @@ function GetAdvancedTools(node: INode): ToolName[] {
         case 'text':
         case 'login':
             return [ToolName.Text, ToolName.TextAction];
+        case 'image':
+            return [ToolName.Image];
     }
     return [];
 }
