@@ -1,0 +1,34 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outFile": "./dist/index.js",
+    "module": "system",
+    "moduleResolution": "node",
+    "removeComments": true,
+    "sourceMap": true,
+    "noFallthroughCasesInSwitch": true,
+    "target": "es5",
+    "lib": [
+      "es2016",
+      "dom",
+      "es5"
+    ],
+    "typeRoots": [
+      "node_modules/@types",
+      "typings"
+    ],
+    "paths": {
+      "@render/*": [
+        "src/render/*"
+      ],
+      "@src/*": [
+        "src/*"
+      ],
+    }
+  },
+  "include": [
+    "src",
+    "typings"
+  ]
+}
