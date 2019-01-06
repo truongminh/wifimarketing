@@ -33,7 +33,9 @@ export class ContentLocalStorage implements ContentNS.Repo {
     const id = Math.random().toString(36).substr(3, 6);
     const c: ContentNS.Content = { id, name, pages: {} };
     this.saveContent(id, c);
-    SetJSON(this.listKey, this.getContentIDs().push(id));
+    const ids = this.getContentIDs();
+    ids.push(id);
+    SetJSON(this.listKey, ids);
     return id;
   }
 

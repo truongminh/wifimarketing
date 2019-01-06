@@ -1,0 +1,22 @@
+<p>
+  Content list
+</p>
+
+<table>
+  <thead>
+    <th>No</th>
+    <th>Name</th>
+  </thead>
+  <tr *ngFor="let c of data; let i = index">
+    <td>{{i + 1}}</td>
+    <td>{{c.name}}</td>
+    <td>
+      <a [routerLink]="[c.id, '0']">Edit</a>
+    </td>
+  </tr>
+</table>
+
+<div>
+  <input #contentName placeholder="Content Name">
+  <button (click)="add(contentName)"> Add </button>
+</div>
