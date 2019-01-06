@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ContentNS } from 'src/app/domain/content';
 
 @Component({
   selector: 'app-edit',
@@ -6,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./edit.component.scss']
 })
 export class EditComponent implements OnInit {
+  content: ContentNS.Content;
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    this.content = this.route.snapshot.data.content;
   }
 
 }
