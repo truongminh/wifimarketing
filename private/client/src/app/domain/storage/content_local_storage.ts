@@ -1,5 +1,5 @@
-import { ContentNS } from "../models/content";
-import { ObjNS } from "../models/obj";
+import { ContentNS } from "../content";
+import { ObjNS } from "../obj";
 
 function GetJSON<T>(key: string): T {
   const value = localStorage.getItem(key);
