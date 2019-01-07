@@ -9,9 +9,11 @@ import { ContentNS } from 'src/app/domain/content';
 export class PageViewerComponent implements OnInit {
   pages: ContentNS.Page[];
   contentId: string;
-  @Input() set content(c: ContentNS.Content) {
-    this.contentId = c.id;
-    this.pages = Object.keys(c.pages).map(id => c.pages[id]);
+  @Input() set content(data: ContentNS.Content) {
+    if (data) {
+      this.contentId = data.id;
+      this.pages = Object.keys(data.pages).map(id => data.pages[id]);
+    }
   };
   constructor(
     private repo: ContentNS.Repo
