@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ContentNS } from 'src/app/domain/content';
+import { ObjsService } from '../../objs/objs.service';
 
 @Component({
   selector: 'app-page-viewer',
@@ -16,7 +17,8 @@ export class PageViewerComponent implements OnInit {
     }
   };
   constructor(
-    private repo: ContentNS.Repo
+    private repo: ContentNS.Repo,
+    private objsService: ObjsService,
   ) { }
 
   ngOnInit() {

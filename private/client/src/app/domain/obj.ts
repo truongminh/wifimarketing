@@ -3,6 +3,7 @@ export module ObjNS {
   interface Base {
     id: string;
     name: string;
+    style: any;
   }
 
   export interface Text extends Base {

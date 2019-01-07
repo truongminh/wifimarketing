@@ -1,3 +1,9 @@
 <div id="deskID">
-  <app-simple-text [text]="title" [style]="style"></app-simple-text>
+  <div *ngFor="let obj of textObjs">
+    textObjs
+    <app-simple-text [model]="obj"></app-simple-text>
+  </div>
+  {{textObjs | json}}
+  {{imageObjs | json}}
+  {{inputObjs | json}}
 </div>

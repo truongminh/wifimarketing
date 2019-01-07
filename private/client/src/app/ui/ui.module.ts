@@ -7,6 +7,7 @@ import { PageViewerComponent } from './page-viewer/page-viewer.component';
 import { RouterModule } from '@angular/router';
 import { DeskComponent } from './desk/desk.component';
 import { ObjsModule } from '../objs/objs.module';
+import { ObjsService } from '../objs/objs.service';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { ObjsModule } from '../objs/objs.module';
   exports: [
     HeaderComponent, ObjectPannelComponent, PropertiesComponent,
     PageViewerComponent, DeskComponent
-  ]
+  ],
+  providers: [ObjsService]
 })
 export class UIModule { }

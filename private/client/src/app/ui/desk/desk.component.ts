@@ -1,19 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { ContentNS } from 'src/app/domain/content';
+import { ObjNS } from 'src/app/domain/obj';
 
 @Component({
   selector: 'app-desk',
   templateUrl: './desk.component.html',
   styleUrls: ['./desk.component.scss']
 })
-export class DeskComponent implements OnInit {
+export class DeskComponent {
 
   constructor() { }
 
-  title = 'client';
-  style = {
-    fontSize: '50px'
+  data = {
+    text: 'client',
+    style: {
+      fontSize: '50px'
+    }
   }
-  ngOnInit() {
+  @Input() set page(pageData: ContentNS.Page) {
+    Object.keys(pageData.objs).forEach(key => {
+      switch (pageData.objs[key].type) {
+        case 'text':
+          this.textObjs.push(pageData.objs[key] as ObjNS.Text);
+          break;
+        case 'image':
+          this.imageObjs.push(pageData.objs[key] as ObjNS.Image);
+          break;
+        case 'input':
+          this.inputObjs.push(pageData.objs[key] as ObjNS.Input);
+          break;
+        default:
+          break;
+      }
+    })
   }
-
+  textObjs: ObjNS.Text[] = [];
+  imageObjs: ObjNS.Image[] = [];
+  inputObjs: ObjNS.Input[] = [];
+  
 }
