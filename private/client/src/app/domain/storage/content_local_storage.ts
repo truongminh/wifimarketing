@@ -58,7 +58,7 @@ export class ContentLocalStorage implements ContentNS.Repo {
     const c = this.getContent(id);
     const page = c.pages[pageId];
     if (page) {
-      page[obj.id] = Object.assign({}, page[obj.id], obj);
+      page.objs[obj.id] = Object.assign({}, page.objs[obj.id], obj);
       this.saveContent(id, c);
       return 1;
     }

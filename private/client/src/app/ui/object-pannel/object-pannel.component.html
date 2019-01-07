@@ -1,3 +1,10 @@
 <p>
-  object-pannel works!
+  Object Pannel
 </p>
+
+
+<div>
+  <button (click)="addObj(type)" *ngFor="let type of types">
+    {{type}}
+  </button>
+</div>

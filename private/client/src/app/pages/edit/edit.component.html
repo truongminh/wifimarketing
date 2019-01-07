@@ -1,3 +1,8 @@
 <app-desk></app-desk>
-<app-object-pannel></app-object-pannel>
+<div>
+  Current Page:
+  {{page | json}}
+</div>
+
+<app-object-pannel [content]="content" [page]="page"></app-object-pannel>
 <app-page-viewer [content]="content"></app-page-viewer>
