@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { ContentNS } from 'src/app/domain/content';
+import { ObjNS } from 'src/app/domain/obj';
 
 @Component({
   selector: 'app-object-pannel',
@@ -6,10 +8,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./object-pannel.component.scss']
 })
 export class ObjectPannelComponent implements OnInit {
+  types = ['text', 'image'];
+  @Input() content: ContentNS.Content;
+  @Input() page: ContentNS.Page;
 
-  constructor() { }
+  constructor(
+    private repo: ContentNS.Repo
+  ) { }
 
   ngOnInit() {
+  }
+
+  addObj(type: 'text' | 'image') {
+    const id = Math.random().toString(36).substr(3, 6);
+    const obj: ObjNS.Text = {
+      id: id,
+      type: 'text',
+      name: type,
+      text: type,
+    };
+    this.repo.PatchObj(this.content.id, this.page.id, obj);
   }
 
 }

@@ -9,6 +9,7 @@ import { ContentNS } from 'src/app/domain/content';
 })
 export class EditComponent implements OnInit {
   content: ContentNS.Content;
+  page: ContentNS.Page;
 
   constructor(
     private route: ActivatedRoute
@@ -16,6 +17,9 @@ export class EditComponent implements OnInit {
 
   ngOnInit() {
     this.content = this.route.snapshot.data.content;
+    this.route.params.subscribe(params => {
+      this.page = this.content.pages[params.page_id];
+    });
   }
 
 }
