@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { ListComponent } from './list/list.component';
 import { EditComponent } from './edit/edit.component';
 import { RouterModule } from '@angular/router';
+import { UIModule } from '../ui/ui.module';
 
 @NgModule({
   declarations: [ListComponent, EditComponent],
-  entryComponents: [ListComponent, EditComponent],
+  exports: [ListComponent, EditComponent],
   imports: [
-    CommonModule, RouterModule
+    CommonModule, RouterModule, UIModule
   ]
 })
 export class PagesModule { }

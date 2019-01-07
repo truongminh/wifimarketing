@@ -47,10 +47,21 @@ export class ContentLocalStorage implements ContentNS.Repo {
     return this.getContent(id);
   }
 
-  async Patch(id: string, pageId: string, obj: ObjNS.Patch) {
+  async PatchPage(id: string, page: Partial<ContentNS.Page>) {
     const c = this.getContent(id);
-    Object.assign(c.pages[pageId][obj.id], obj);
+    c.pages[page.id] = Object.assign({}, c.pages[page.id], page);
     this.saveContent(id, c);
     return 1;
+  }
+
+  async PatchObj(id: string, pageId: string, obj: Partial<ObjNS.Obj>) {
+    const c = this.getContent(id);
+    const page = c.pages[pageId];
+    if (page) {
+      page[obj.id] = Object.assign({}, page[obj.id], obj);
+      this.saveContent(id, c);
+      return 1;
+    }
+    return 0;
   }
 }
