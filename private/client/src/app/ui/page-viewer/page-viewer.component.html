@@ -1,3 +1,24 @@
-<p>
-  page-viewer works!
-</p>
+<div>
+  Page Viewer
+</div>
+
+<table>
+  <thead>
+    <th>ID</th>
+    <th>Name</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of pages">
+      <td>{{p.id}}</td>
+      <td>{{p.name}}</td>
+      <td>
+        <a [routerLink]="['..', p.id]">edit</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div>
+  <input #pageName placeholder="Page Name">
+  <button (click)="addPage(pageName)"> Add </button>
+</div>

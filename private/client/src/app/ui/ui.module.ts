@@ -4,11 +4,19 @@ import { HeaderComponent } from './header/header.component';
 import { ObjectPannelComponent } from './object-pannel/object-pannel.component';
 import { PropertiesComponent } from './properties/properties.component';
 import { PageViewerComponent } from './page-viewer/page-viewer.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [HeaderComponent, ObjectPannelComponent, PropertiesComponent, PageViewerComponent],
+  declarations: [
+    HeaderComponent,
+    ObjectPannelComponent, PropertiesComponent, PageViewerComponent
+  ],
   imports: [
-    CommonModule
+    CommonModule, RouterModule
+  ],
+  exports: [
+    HeaderComponent,
+    ObjectPannelComponent, PropertiesComponent, PageViewerComponent
   ]
 })
 export class UIModule { }

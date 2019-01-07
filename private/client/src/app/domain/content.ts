@@ -13,10 +13,11 @@ export namespace ContentNS {
     pages: { [index: string]: Page };
   }
 
-  export interface Repo {
-    Create(name: string): Promise<string>;
-    List(): Promise<Content[]>;
-    Get(id: string): Promise<Content>;
-    Patch(id: string, page: string, obj: ObjNS.Patch): Promise<number>;
+  export abstract class Repo {
+    abstract Create(name: string): Promise<string>;
+    abstract List(): Promise<Content[]>;
+    abstract Get(id: string): Promise<Content>;
+    abstract PatchPage(id: string, page: Partial<Page>): Promise<number>;
+    abstract PatchObj(id: string, pageId: string, obj: Partial<ObjNS.Obj>): Promise<number>;
   }
 }
