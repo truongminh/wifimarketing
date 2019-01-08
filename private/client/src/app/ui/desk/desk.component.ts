@@ -11,35 +11,11 @@ export class DeskComponent {
 
   constructor() { }
 
-  data = {
-    text: 'client',
-    style: {
-      fontSize: '50px'
+  @Input() set page(data: ContentNS.Page) {
+    if (data) {
+      this.objs = Object.keys(data.objs).map(key => data.objs[key]);
     }
-  }
-  @Input() set page(pageData: ContentNS.Page) {
-    if (!pageData || !pageData.objs) {
-      return;
-    }
-    this.textObjs = [];
-    Object.keys(pageData.objs).forEach(key => {
-      switch (pageData.objs[key].type) {
-        case 'text':
-          this.textObjs.push(pageData.objs[key] as ObjNS.Text);
-          break;
-        case 'image':
-          this.imageObjs.push(pageData.objs[key] as ObjNS.Image);
-          break;
-        case 'input':
-          this.inputObjs.push(pageData.objs[key] as ObjNS.Input);
-          break;
-        default:
-          break;
-      }
-    })
-  }
-  textObjs: ObjNS.Text[] = [];
-  imageObjs: ObjNS.Image[] = [];
-  inputObjs: ObjNS.Input[] = [];
+  };
+  objs: ObjNS.Obj[] = [];
 
 }
