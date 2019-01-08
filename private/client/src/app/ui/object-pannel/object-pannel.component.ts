@@ -22,7 +22,7 @@ export class ObjectPannelComponent {
       id: id,
       type: 'text',
       name: type,
-      text: type,
+      attrs: { text: `text ${id}` },
       style: {
         position: 'absolute',
         top: '30px',

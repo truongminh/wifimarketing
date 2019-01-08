@@ -1,7 +1,26 @@
 
-div, app-object-pannel, app-page-viewer {
+app-desk, app-object-pannel, app-page-viewer, .status {
   display: block;
   margin: 10px;
   padding: 8px;
   border:1px solid black;
+}
+
+:host {
+  display: flex;
+}
+
+
+.left {
+  flex: 1 1 600px;
+}
+
+.right {
+  display: flex;
+  flex-flow: column;
+  flex: 0 0 250px;
+}
+
+.status {
+  font-size: 12px;
 }

@@ -1,10 +1,6 @@
 import { Component, Input, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { ObjNS } from 'src/app/domain/obj';
 
-interface ITextStyle {
-  color?: string;
-  fontSize?: string;
-  fontWeight?: string;
-}
 
 @Component({
   selector: 'app-simple-text',
@@ -15,12 +11,14 @@ export class SimpleTextComponent {
 
   constructor() { }
 
-  text = '';
-  @Input() set model(data: {text: string, style: ITextStyle}) {
-    this.text = data.text;
-    Object.keys(data.style).forEach(key => {
-      this.textEl.nativeElement.style[key] = data.style[key];
-    })
+  @Input() set data(d: ObjNS.Text) {
+    const el = this.textEl.nativeElement as HTMLElement;
+    if (d.style) {
+      Object.assign(el.style, d.style);
+    }
+    if (d.attrs) {
+      el.textContent = d.attrs.text;
+    }
   };
   @ViewChild('textEl') textEl: ElementRef;
 

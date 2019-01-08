@@ -18,6 +18,10 @@ export class DeskComponent {
     }
   }
   @Input() set page(pageData: ContentNS.Page) {
+    if (!pageData || !pageData.objs) {
+      return;
+    }
+    this.textObjs = [];
     Object.keys(pageData.objs).forEach(key => {
       switch (pageData.objs[key].type) {
         case 'text':
@@ -37,5 +41,5 @@ export class DeskComponent {
   textObjs: ObjNS.Text[] = [];
   imageObjs: ObjNS.Image[] = [];
   inputObjs: ObjNS.Input[] = [];
-  
+
 }

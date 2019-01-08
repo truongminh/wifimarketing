@@ -8,12 +8,24 @@ export module ObjNS {
 
   export interface Text extends Base {
     type: 'text';
-    text: string;
+    attrs: {
+      text: string;
+    };
+    style: {
+      top?: string;
+      left?: string;
+      position?: string;
+      color?: string;
+      fontSize?: string;
+      fontWeight?: string;
+    }
   }
 
   export interface Image extends Base {
     type: 'image';
-    src: string;
+    attrs: {
+      src: string;
+    };
   }
 
   export interface Input extends Base {

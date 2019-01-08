@@ -1,8 +1,11 @@
-<app-desk [page]="page"></app-desk>
-<div>
-  Current Page:
-  {{page | json}}
-</div>
+<app-desk class="left" [page]="page"></app-desk>
+<div class="right">
+  <app-object-pannel [content]="content" [page]="page"></app-object-pannel>
+  <app-page-viewer [content]="content"></app-page-viewer>
 
-<app-object-pannel [content]="content" [page]="page"></app-object-pannel>
-<app-page-viewer [content]="content"></app-page-viewer>
+  <div class="status">
+    Current Page:
+    {{page | json}}
+  </div>
+
+</div>

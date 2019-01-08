@@ -3,4 +3,10 @@
     width: 50vw;
     height: 50vh;
     position: relative;
+    margin: 10px;
+    padding: 10px;
+}
+
+[obj-host]:hover {
+  border: 1px dashed blue;
 }
