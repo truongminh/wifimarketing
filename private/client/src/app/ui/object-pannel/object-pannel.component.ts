@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { ContentNS } from 'src/app/domain/content';
 import { ObjNS } from 'src/app/domain/obj';
 
+
 @Component({
   selector: 'app-object-pannel',
   templateUrl: './object-pannel.component.html',
@@ -16,13 +17,14 @@ export class ObjectPannelComponent {
     private repo: ContentNS.Repo,
   ) { }
 
-  addObj(type: 'text' | 'image') {
+  private newText() {
     const id = Math.random().toString(36).substr(3, 6);
+    const name = `text ${id}`;
     const obj: ObjNS.Text = {
-      id: id,
+      id,
       type: 'text',
-      name: type,
-      attrs: { text: `text ${id}` },
+      name,
+      attrs: { text: name },
       style: {
         position: 'absolute',
         top: '30px',
@@ -30,6 +32,11 @@ export class ObjectPannelComponent {
         fontSize: '20px'
       }
     };
+    return obj;
+  }
+
+  addObj(type: 'text' | 'image') {
+    const obj = this.newText();
     this.repo.PatchObj(this.content.id, this.page.id, obj);
   }
 

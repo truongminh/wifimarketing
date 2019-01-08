@@ -1,34 +1,44 @@
 
 export module ObjNS {
-  interface Base {
+  interface Style {
+    top?: string;
+    left?: string;
+    position?: string;
+    color?: string;
+    fontSize?: string;
+    fontWeight?: string;
+  }
+  interface Rect {
+    x?: number;
+    y?: number;
+    w?: number;
+    h?: number;
+  }
+  interface Base<Attr> {
     id: string;
     name: string;
-    style: any;
+    attrs: Attr;
+    style?: Style;
+    rect?: Rect;
   }
 
-  export interface Text extends Base {
+  interface TextAttr {
+    text?: string;
+  }
+
+  export interface Text extends Base<TextAttr> {
     type: 'text';
-    attrs: {
-      text: string;
-    };
-    style: {
-      top?: string;
-      left?: string;
-      position?: string;
-      color?: string;
-      fontSize?: string;
-      fontWeight?: string;
-    }
   }
 
-  export interface Image extends Base {
+  interface MediaAttr {
+    src?: string;
+  }
+
+  export interface Image extends Base<MediaAttr> {
     type: 'image';
-    attrs: {
-      src: string;
-    };
   }
 
-  export interface Input extends Base {
+  export interface Input extends Base<any> {
     type: 'input';
   }
 
