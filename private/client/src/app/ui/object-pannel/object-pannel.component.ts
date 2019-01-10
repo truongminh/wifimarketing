@@ -19,16 +19,13 @@ export class ObjectPannelComponent {
 
   private newText() {
     const id = Math.random().toString(36).substr(3, 6);
-    const name = `text ${id}`;
+    const name = `text`;
     const obj: ObjNS.Text = {
-      id,
+      id, name,
       type: 'text',
-      name,
       attrs: { text: name },
+      rect: { x: 30, y: 30, w: 100, h: 20 },
       style: {
-        position: 'absolute',
-        top: '30px',
-        left: '30px',
         fontSize: '20px'
       }
     };
