@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ContentNS } from 'src/app/domain/content';
-import { ObjNS } from '../domain/obj';
+import { Subscription, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,20 +9,21 @@ import { ObjNS } from '../domain/obj';
 export class ObjsService {
 
   constructor(
-    private repo: ContentNS.Repo,
+    private route: ActivatedRoute
   ) { }
 
-  content: ContentNS.Content;
-  selectedPage = '';
+  content$: BehaviorSubject<ContentNS.Content> = new BehaviorSubject(null);
+  selectedPage: string = '';
+  selectedObj: string = '';
+  propertyChange$ = new BehaviorSubject(null);
+  private subscription: Subscription[] = [];
 
-  setInitContent() {
-    this.content = this.repo.List()[0];
-    if (this.content && Object.keys(this.content.pages).length) {
-      this.selectedPage = Object.keys(this.content.pages)[0]
-    }
+  setPage(pageID: string) {
+    this.selectedPage = pageID;
   }
 
-  pushObj(obj: ObjNS.Text | ObjNS.Image | ObjNS.Input) {
-    this.content[obj.id] = obj;
+  setObj(objID: string) {
+    this.selectedObj = objID;
   }
+  
 }

@@ -1,3 +1,12 @@
-<p>
-  properties works!
-</p>
+<div id="propertyID">
+    <span>Width:</span>
+    <input type="number" [(ngModel)]="_object.rect.w" (change)="onPropertyChange()">
+    <span>Height:</span>
+    <input type="number" [(ngModel)]="_object.rect.h" (change)="onPropertyChange()">
+    <h3>Cordinate</h3>
+    <span>X:</span>
+    <input type="number" [(ngModel)]="_object.rect.x" (change)="onPropertyChange()">
+    <span>Y:</span>
+    <input type="number" [(ngModel)]="_object.rect.y" (change)="onPropertyChange()">
+    <button (click)="test()">test</button>
+</div>

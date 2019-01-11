@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from './header/header.component';
 import { ObjectPannelComponent } from './object-pannel/object-pannel.component';
 import { PropertiesComponent } from './properties/properties.component';
@@ -17,7 +18,7 @@ import { SimpleImgComponent } from '../objs/simple-img/simple-img.component';
     PageViewerComponent, DeskComponent
   ],
   imports: [
-    CommonModule, RouterModule, ObjsModule
+    CommonModule, RouterModule, FormsModule, ObjsModule,
   ],
   exports: [
     HeaderComponent, ObjectPannelComponent, PropertiesComponent,

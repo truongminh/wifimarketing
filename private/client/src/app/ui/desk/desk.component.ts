@@ -1,6 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectorRef } from '@angular/core';
 import { ContentNS } from 'src/app/domain/content';
 import { ObjNS } from 'src/app/domain/obj';
+import { ObjsService } from 'src/app/objs/objs.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-desk',
@@ -9,7 +11,10 @@ import { ObjNS } from 'src/app/domain/obj';
 })
 export class DeskComponent {
 
-  constructor() { }
+  constructor(
+    private objsService: ObjsService,
+    private changeDetectorRef: ChangeDetectorRef,
+  ) { }
 
   @Input() set page(data: ContentNS.Page) {
     if (data) {
@@ -17,5 +22,13 @@ export class DeskComponent {
     }
   };
   objs: ObjNS.Obj[] = [];
+  private subscription: Subscription;
+
+  ngOnInit(): void {
+    this.subscription = this.objsService.propertyChange$.subscribe(d => {
+      console.log('__________', this.objs)
+      this.objs = Array.from(this.objs);
+    });
+  }
 
 }

@@ -1,11 +1,11 @@
-<app-desk class="left" [page]="page"></app-desk>
+<app-desk class="left" [page]="page$ |async"></app-desk>
 <div class="right">
-  <app-object-pannel [content]="content" [page]="page"></app-object-pannel>
-  <app-page-viewer [content]="content"></app-page-viewer>
+  <app-object-pannel [content]="content$ |async" [page]="page$ |async"></app-object-pannel>
+  <app-page-viewer [content]="content$ |async"></app-page-viewer>
 
   <div class="status">
     Current Page:
-    {{page | json}}
+    {{page$ | async | json}}
   </div>
-
+  <app-properties [object]="object$ | async"></app-properties>
 </div>

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { ObjNS } from 'src/app/domain/obj';
+import { ObjsService } from 'src/app/objs/objs.service';
 
 @Component({
   selector: 'app-properties',
@@ -7,9 +9,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PropertiesComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private objsService: ObjsService,
+  ) { }
+
+  @Input() set object(data: ObjNS.Obj) {
+    console.log(data)
+    this._object = data;
+  }
+
+  _object: ObjNS.Obj;
 
   ngOnInit() {
+  }
+
+  onPropertyChange() {
+    // this.objsService
+    // console.log('__________')
+  }
+
+  test() {
+    this.objsService.propertyChange$.next(null);
   }
 
 }
