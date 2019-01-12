@@ -19,6 +19,8 @@ app-desk, app-object-pannel, app-page-viewer, app-properties, .status {
   display: flex;
   flex-flow: column;
   flex: 0 0 250px;
+  height: 90vh;
+  overflow: scroll;
 }
 
 .status {

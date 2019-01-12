@@ -15,16 +15,15 @@ export class ObjsService {
     ) { }
 
   focus = new BehaviorSubject<ObjNS.Obj>(null);
-  selectedPage: string = '';
-  selectedObj: string = '';
   propertyChange$ = new BehaviorSubject(null);
-  private subscription: Subscription[] = [];
-  setObj(objID: string) {
-    this.selectedObj = objID;
-  }
 
-  changeRect(objId: string, rect: ObjNS.Obj['rect']) {
-
+  Patch(contentId: string, pageId: string, obj: ObjNS.Patch) {
+    this.repo.PatchObj(contentId, pageId, obj);
+    const focus = this.focus.value;
+    if (focus && focus.id === obj.id) {
+      Object.assign(focus, obj);
+      this.focus.next(focus);
+    }
   }
 
 }

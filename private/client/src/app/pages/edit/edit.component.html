@@ -5,8 +5,8 @@
 
   <div class="status">
     <div>Current Page: {{page?.name}}</div>
-    <div>Current Obj: {{focus | async | json}}</div>
+    <div>Current Obj: {{obj | async | json}}</div>
 
   </div>
-  <!-- <app-properties [object]="object$ | async"></app-properties> -->
+  <app-properties [obj]="obj | async"></app-properties>
 </div>

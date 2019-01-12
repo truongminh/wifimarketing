@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ObjNS } from 'src/app/domain/obj';
 import { ObjsService } from 'src/app/objs/objs.service';
+import { ContentNS } from 'src/app/domain/content';
 
 @Component({
   selector: 'app-properties',
@@ -13,12 +14,9 @@ export class PropertiesComponent implements OnInit {
     private objsService: ObjsService,
   ) { }
 
-  @Input() set object(data: ObjNS.Obj) {
-    console.log(data)
-    this._object = data;
-  }
-
-  _object: ObjNS.Obj;
+  @Input() contentId: string;
+  @Input() page: ContentNS.Page;
+  @Input() obj: ObjNS.Obj;
 
   ngOnInit() {
   }

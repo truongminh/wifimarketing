@@ -39,6 +39,10 @@ export class DeskComponent {
   }
 
   onPatch(obj: ObjNS.Patch) {
-    this.repo.PatchObj(this.contentId, this.pageId, obj);
+    this.objsService.Patch(this.contentId, this.pageId, obj);
+  }
+
+  onUnfocus() {
+    this.objsService.focus.next(null);
   }
 }

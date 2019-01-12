@@ -17,7 +17,7 @@ export class EditComponent implements OnInit {
 
   content: ContentNS.Content;
   page: ContentNS.Page;
-  focus = this.objsService.focus;
+  obj = this.objsService.focus;
   ngOnInit() {
     this.content = this.route.snapshot.data.content;
     this.route.params.subscribe(params => {

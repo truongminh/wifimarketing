@@ -1,9 +1,8 @@
-<div id="propertyID">
+<div *ngIf="obj">
     <span>Width:</span>
-    <input type="number" [(ngModel)]="_object.rect.w" (change)="onPropertyChange()">
+    <input type="number" [(ngModel)]="obj?.rect.w" (change)="onPropertyChange()">
     <span>Height:</span>
-    <input type="number" [(ngModel)]="_object.rect.h" (change)="onPropertyChange()">
-    <h3>Cordinate</h3>
+    <input type="number" [(ngModel)]="obj.rect.h" (change)="onPropertyChange()">
     <span>X:</span>
     <input type="number" [(ngModel)]="_object.rect.x" (change)="onPropertyChange()">
     <span>Y:</span>

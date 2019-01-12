@@ -3,6 +3,7 @@ import { SimpleTextComponent } from './simple-text/simple-text.component';
 import { SimpleImgComponent } from './simple-img/simple-img.component';
 import { ObjNS } from '../domain/obj';
 import { ObjsService } from './objs.service';
+import { Subscription } from 'rxjs';
 
 interface TypeObjComponent {
   new(): { data: ObjNS.Obj };
@@ -17,6 +18,8 @@ componentMap.set('image', SimpleImgComponent);
 })
 export class ObjsHostDirective implements OnInit {
 
+  private focusSub: Subscription;
+
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
     private ref: ViewContainerRef,
@@ -30,6 +33,8 @@ export class ObjsHostDirective implements OnInit {
 
   enableDrag(el: HTMLElement, onRectChange) {
     el.onmousedown = (origin: MouseEvent) => {
+      origin.preventDefault();
+      origin.stopPropagation();
       const { offsetLeft: left, offsetTop: top } = el;
       const { pageX: oPageX, pageY: oPageY } = origin;
       const onmousemove = (ev: MouseEvent) => {
@@ -51,17 +56,21 @@ export class ObjsHostDirective implements OnInit {
     }
   }
 
-  showFocus(el: HTMLElement, onRectChange) {
-    el.style.border = '1px dashed green';
-    this.enableDrag(el, onRectChange);
-  }
-
-  hideFocus(el: HTMLElement) {
-    el.style.border = '';
+  disableDrag(el: HTMLElement) {
     el.onmousedown = null;
   }
 
+  private reset() {
+    if (this.focusSub) {
+      this.focusSub.unsubscribe();
+      this.focusSub = null;
+    }
+    this.ref.clear();
+  }
+
   @Input() set data(data: ObjNS.Obj) {
+    this.reset();
+
     if (data) {
       const componentType = componentMap.get(data.type);
       if (!componentType) {
@@ -79,19 +88,14 @@ export class ObjsHostDirective implements OnInit {
       this.render.setStyle(el, 'left', `${x || 0}px`);
       this.render.setStyle(el, 'width', `${w || 20}px`);
       this.render.setStyle(el, 'height', `${h || 20}px`);
-      el.onclick = () => {
-        this.objService.focus.next(data);
-      };
-      this.objService.focus.subscribe(obj => {
-        if (data === obj) {
-          this.showFocus(el, () => {
-            const { offsetLeft: x, offsetTop: y, offsetWidth: w, offsetHeight: h } = el;
-            const rect = { x, y, w, h };
-            this.patch.next({ id: data.id, rect });
-          });
-        } else {
-          this.hideFocus(el);
-        }
+      this.render.setStyle(el, 'cursor', 'default');
+      el.onclick = () => this.objService.focus.next(data);
+      el.onmouseover = () => el.style.border = '1px solid blue';
+      el.onmouseleave = () => el.style.border = '';
+      this.enableDrag(el, () => {
+        const { offsetLeft: x, offsetTop: y, offsetWidth: w, offsetHeight: h } = el;
+        const rect = { x, y, w, h };
+        this.patch.next({ id: data.id, rect });
       });
     }
   }
