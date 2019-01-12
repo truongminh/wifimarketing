@@ -9,7 +9,7 @@ import { ObjNS } from 'src/app/domain/obj';
   styleUrls: ['./object-pannel.component.scss']
 })
 export class ObjectPannelComponent {
-  types = ['text', 'image'];
+  types = ['text', 'image', 'input:text'];
   @Input() content: ContentNS.Content;
   @Input() page: ContentNS.Page;
 

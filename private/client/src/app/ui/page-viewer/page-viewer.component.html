@@ -12,7 +12,7 @@
       <td>{{p.id}}</td>
       <td>{{p.name}}</td>
       <td>
-        <a [routerLink]="['..', p.id]">edit</a>
+        <a [routerLink]="[{page_id: p.id}]">edit</a>
       </td>
     </tr>
   </tbody>

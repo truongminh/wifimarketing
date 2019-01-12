@@ -12,13 +12,21 @@ import { Subscription } from 'rxjs';
 export class DeskComponent {
 
   constructor(
+    private repo: ContentNS.Repo,
     private objsService: ObjsService,
     private changeDetectorRef: ChangeDetectorRef,
   ) { }
 
+  @Input() contentId: string;
+  private pageId: string;
+
   @Input() set page(data: ContentNS.Page) {
     if (data) {
-      this.objs = Object.keys(data.objs).map(key => data.objs[key]);
+      this.pageId = data.id;
+      this.objs = Object.values(data.objs);
+    } else {
+      this.pageId = '';
+      this.objs = [];
     }
   };
   objs: ObjNS.Obj[] = [];
@@ -26,9 +34,11 @@ export class DeskComponent {
 
   ngOnInit(): void {
     this.subscription = this.objsService.propertyChange$.subscribe(d => {
-      console.log('__________', this.objs)
       this.objs = Array.from(this.objs);
     });
   }
 
+  onPatch(obj: ObjNS.Patch) {
+    this.repo.PatchObj(this.contentId, this.pageId, obj);
+  }
 }

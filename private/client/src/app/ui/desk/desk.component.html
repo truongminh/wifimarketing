@@ -1,3 +1,3 @@
 <div id="deskID">
-  <ng-template objsHost *ngFor="let obj of objs" [data]="obj"></ng-template>
+  <ng-template objsHost (patch)="onPatch($event)" *ngFor="let obj of objs" [data]="obj"></ng-template>
 </div>

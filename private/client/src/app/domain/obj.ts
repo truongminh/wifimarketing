@@ -1,5 +1,5 @@
 
-export module ObjNS {
+export namespace ObjNS {
   interface Style {
     top?: string;
     left?: string;
@@ -38,10 +38,21 @@ export module ObjNS {
     type: 'image';
   }
 
-  export interface Input extends Base<any> {
-    type: 'input';
+  export namespace InputNS {
+    interface TextAttr {
+      placeholder: string;
+    }
+
+    export interface Text extends Base<TextAttr> {
+      type: 'input:text';
+    }
+
+    export interface Checkbox extends Base<any> {
+      type: 'input:checkbox';
+    }
   }
 
+  type Input = InputNS.Text | InputNS.Checkbox;
   export type Obj = Text | Image | Input;
   export type Patch = Partial<Obj>;
 }

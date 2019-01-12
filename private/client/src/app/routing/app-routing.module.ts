@@ -8,7 +8,7 @@ import { ContentResolver } from './ContentResolver';
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: ListComponent },
   {
-    path: ':content_id/:page_id',
+    path: ':content_id',
     component: EditComponent,
     resolve: {
       content: ContentResolver

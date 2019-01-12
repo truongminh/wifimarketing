@@ -12,7 +12,6 @@ export class SimpleTextComponent {
   constructor() { }
 
   @Input() set data(d: ObjNS.Text) {
-    console.log('aaaaaaaaaaaaaaaaaaaaaa')
     const el = this.textEl.nativeElement as HTMLElement;
     if (d.style) {
       Object.assign(el.style, d.style);
