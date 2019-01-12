@@ -7,6 +7,7 @@ export namespace ObjNS {
     color?: string;
     fontSize?: string;
     fontWeight?: string;
+    zIndex?: string;
   }
   interface Rect {
     x?: number;

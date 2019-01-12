@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ObjNS } from 'src/app/domain/obj';
 import { ObjsService } from 'src/app/objs/objs.service';
 import { ContentNS } from 'src/app/domain/content';
@@ -17,6 +17,7 @@ export class PropertiesComponent implements OnInit {
   @Input() contentId: string;
   @Input() page: ContentNS.Page;
   @Input() obj: ObjNS.Obj;
+  @Output() delete = new EventEmitter<ObjNS.Obj>();
 
   ngOnInit() {
   }
@@ -26,8 +27,8 @@ export class PropertiesComponent implements OnInit {
     // console.log('__________')
   }
 
-  test() {
-    this.objsService.propertyChange$.next(null);
+  onDelete(obj: ObjNS.Obj) {
+    this.delete.next(obj);
   }
 
 }

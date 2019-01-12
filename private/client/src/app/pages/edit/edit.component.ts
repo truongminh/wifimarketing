@@ -3,6 +3,7 @@ import { ObjsService } from 'src/app/objs/objs.service';
 import { map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { ContentNS } from 'src/app/domain/content';
+import { ObjNS } from 'src/app/domain/obj';
 
 @Component({
   selector: 'app-edit',
@@ -26,5 +27,4 @@ export class EditComponent implements OnInit {
       }
     });
   }
-
 }

@@ -18,17 +18,22 @@ export class DeskComponent {
   ) { }
 
   @Input() contentId: string;
-  private pageId: string;
+  private _page: ContentNS.Page;
 
   @Input() set page(data: ContentNS.Page) {
     if (data) {
-      this.pageId = data.id;
+      this._page = data;
       this.objs = Object.values(data.objs);
     } else {
-      this.pageId = '';
+      this._page = null;
       this.objs = [];
     }
   };
+
+  get page() {
+    return this._page;
+  }
+
   objs: ObjNS.Obj[] = [];
   private subscription: Subscription;
 
@@ -38,8 +43,23 @@ export class DeskComponent {
     });
   }
 
+  Add(obj: ObjNS.Obj) {
+    this.objsService.Add(this.contentId, this.page.id, obj);
+    this.objs.push(obj);
+    this.page.objs[obj.id] = obj;
+  }
+
+  Delete(obj: ObjNS.Obj) {
+    this.objsService.Delete(this.contentId, this.page, obj);
+    const index = this.objs.findIndex(o => o.id === obj.id);
+    if (index !== -1) {
+      this.objs.splice(index, 1);
+      delete this.page.objs[obj.id];
+    }
+  }
+
   onPatch(obj: ObjNS.Patch) {
-    this.objsService.Patch(this.contentId, this.pageId, obj);
+    this.objsService.Patch(this.contentId, this.page.id, obj);
   }
 
   onUnfocus() {
