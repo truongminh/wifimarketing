@@ -1,4 +1,4 @@
-<app-desk class="left" #desk [contentId]="content.id" [page]="page"></app-desk>
+<app-desk class="left" #desk></app-desk>
 <div class="right">
   <app-object-pannel (add)="desk.Add($event)" [content]="content" [page]="page"></app-object-pannel>
   <app-page-viewer [content]="content"></app-page-viewer>
@@ -7,5 +7,5 @@
     <div>Current Page: {{page?.name}}</div>
     <div>Current Obj: {{obj | async | json}}</div>
   </div>
-  <app-properties (delete)="desk.Delete($event)" [obj]="obj | async"></app-properties>
+  <app-properties></app-properties>
 </div>

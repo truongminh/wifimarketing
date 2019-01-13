@@ -1,7 +1,7 @@
 <div *ngIf="obj">
   <div>
     {{obj.name}}
-    <button (click)="onDelete(obj)">Delete</button>
+    <!-- <button (click)="onDelete(obj)">Delete</button> -->
   </div>
   <span>Width:</span>
   <input type="number" [(ngModel)]="obj.rect.w" (change)="onPropertyChange()">

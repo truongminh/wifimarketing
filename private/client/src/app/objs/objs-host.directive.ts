@@ -27,13 +27,33 @@ export class ObjsHostDirective implements OnInit {
     private render: Renderer2
   ) { }
 
+  @Input() set objID(value: string) {
+    if (this.pageSubscription) {
+      this.pageSubscription.unsubscribe();
+      this.pageSubscription = null;
+    }
+    this.pageSubscription = this.objService.page$.subscribe(page => {
+      if (this.objSubscription) {
+        this.objSubscription.unsubscribe();
+        this.objSubscription = null;
+      }
+      this.registerOBJ(page.objs[value])
+    })
+
+  };
+
+  @Output() patch = new EventEmitter<ObjNS.Patch>();
+
+  private pageSubscription: Subscription;
+  private objSubscription: Subscription;
+
   ngOnInit() {
 
   }
 
   enableDrag(el: HTMLElement, onRectChange) {
     el.onmousedown = (origin: MouseEvent) => {
-      origin.preventDefault();
+      // origin.preventDefault();
       origin.stopPropagation();
       const { offsetLeft: left, offsetTop: top } = el;
       const { pageX: oPageX, pageY: oPageY } = origin;
@@ -68,9 +88,8 @@ export class ObjsHostDirective implements OnInit {
     this.ref.clear();
   }
 
-  @Input() set data(data: ObjNS.Obj) {
+  private registerOBJ(data: ObjNS.Obj) {
     this.reset();
-
     if (data) {
       const componentType = componentMap.get(data.type);
       if (!componentType) {
@@ -89,17 +108,45 @@ export class ObjsHostDirective implements OnInit {
       this.render.setStyle(el, 'width', `${w || 20}px`);
       this.render.setStyle(el, 'height', `${h || 20}px`);
       this.render.setStyle(el, 'cursor', 'default');
-      el.onclick = () => this.objService.focus.next(data);
-      el.onmouseover = () => el.style.border = '1px solid blue';
-      el.onmouseleave = () => el.style.border = '';
-      this.enableDrag(el, () => {
-        const { offsetLeft: x, offsetTop: y, offsetWidth: w, offsetHeight: h } = el;
-        const rect = { x, y, w, h };
-        this.patch.next({ id: data.id, rect });
-      });
+      this.objSubscription = this.objService.focus$.subscribe(obj => {
+        if (obj && obj.id === data.id) el.style.border = '1px solid #f00';
+        if (!obj || obj.id !== data.id) el.style.border = '';
+      })
+      el.onmousedown = (origin: MouseEvent) => {
+        this.objService.focus$.next(data);
+        // origin.preventDefault();
+        origin.stopPropagation();
+        const { offsetLeft: left, offsetTop: top } = el;
+        const { pageX: oPageX, pageY: oPageY } = origin;
+        const onmousemove = (ev: MouseEvent) => {
+          const { pageX, pageY } = ev;
+          const diffX = pageX - oPageX;
+          const x = left + diffX;
+          el.style.left = `${x}px`;
+          const diffY = pageY - oPageY;
+          const y = top + diffY;
+          el.style.top = `${y}px`;
+        }
+        const onmouseup = () => {
+          window.removeEventListener('mouseup', onmouseup);
+          window.removeEventListener('mousemove', onmousemove);
+          const { offsetLeft: x, offsetTop: y, clientWidth: w, clientHeight: h } = el;
+          const rect = { x, y, w, h };
+          const newContent = this.objService.content$.value;
+          newContent.pages[this.objService.selectedPage$.value].objs[data.id].rect = rect;
+          this.objService.content$.next(newContent);
+        }
+        window.addEventListener('mouseup', onmouseup);
+        window.addEventListener('mousemove', onmousemove);
+      };
+      el.onmouseover = () => {
+        if (!this.objService.focus$.value || this.objService.focus$.value.id !== data.id)
+          el.style.border = '1px solid blue';
+      };
+      el.onmouseleave = () => {
+        if (!this.objService.focus$.value || this.objService.focus$.value.id !== data.id)
+          el.style.border = '';
+      }
     }
   }
-
-  @Output() patch = new EventEmitter<ObjNS.Patch>();
-
 }

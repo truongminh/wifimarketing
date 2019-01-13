@@ -18,12 +18,14 @@ export class EditComponent implements OnInit {
 
   content: ContentNS.Content;
   page: ContentNS.Page;
-  obj = this.objsService.focus;
+  obj = this.objsService.focus$;
   ngOnInit() {
-    this.content = this.route.snapshot.data.content;
+    this.content = this.route.snapshot.data.content;//
+    this.objsService.content$.next(this.route.snapshot.data.content);
     this.route.params.subscribe(params => {
       if (params.page_id) {
-        this.page = this.content.pages[params.page_id];
+        this.objsService.selectedPage$.next(params.page_id);
+        this.page = this.content.pages[params.page_id];//
       }
     });
   }
