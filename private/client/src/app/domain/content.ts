@@ -20,4 +20,18 @@ export namespace ContentNS {
     abstract PatchPage(id: string, page: Partial<Page>): Promise<number>;
     abstract PatchObj(id: string, pageId: string, obj: Partial<ObjNS.Obj>): Promise<number>;
   }
+
+  export function AddObj(page: Page, obj: ObjNS.Obj) {
+    const id = Math.random().toString(36).substr(3, 6);
+    obj.id = id;
+    const list = Object.values(page.objs);
+    obj.style = obj.style || {};
+    console.log(list);
+    const lastObj = list.length > 0 ? Math.max(...list.map(o => o.nth)) : 0;
+    const nth = (lastObj || 0) + 1;
+    obj.nth = nth;
+    obj.style.zIndex = `${nth}`;
+    obj.name = `${obj.name}:${nth}`;
+    page.objs[obj.id] = obj;
+  }
 }

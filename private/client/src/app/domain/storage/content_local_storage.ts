@@ -1,6 +1,17 @@
 import { ContentNS } from "../content";
 import { ObjNS } from "../obj";
 
+function clone(obj) {
+  if (!obj || typeof obj !== 'object') {
+    return obj;
+  }
+  const res = {};
+  Object.entries(obj).forEach(([key, value]) => {
+    res[key] = clone(value);
+  });
+  return res;
+}
+
 function GetJSON<T>(key: string): T {
   const value = localStorage.getItem(key);
   if (typeof value === 'string') {
@@ -48,14 +59,14 @@ export class ContentLocalStorage implements ContentNS.Repo {
   }
 
   async PatchPage(id: string, page: Partial<ContentNS.Page>) {
-    const c = this.getContent(id);
+    const c = clone(this.getContent(id));
     c.pages[page.id] = Object.assign({}, c.pages[page.id], page);
     this.saveContent(id, c);
     return 1;
   }
 
   async PatchObj(id: string, pageId: string, obj: Partial<ObjNS.Obj>) {
-    const c = this.getContent(id);
+    const c = clone(this.getContent(id));
     const page = c.pages[pageId];
     if (page) {
       page.objs[obj.id] = Object.assign({}, page.objs[obj.id], obj);

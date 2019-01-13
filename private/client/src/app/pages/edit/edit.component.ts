@@ -8,7 +8,10 @@ import { ObjNS } from 'src/app/domain/obj';
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.scss']
+  styleUrls: ['./edit.component.scss'],
+  providers: [
+    ObjsService
+  ]
 })
 export class EditComponent implements OnInit {
   constructor(
@@ -20,7 +23,7 @@ export class EditComponent implements OnInit {
   page: ContentNS.Page;
   obj = this.objsService.focus$;
   ngOnInit() {
-    this.content = this.route.snapshot.data.content;//
+    this.content = this.route.snapshot.data.content;
     this.objsService.content$.next(this.route.snapshot.data.content);
     this.route.params.subscribe(params => {
       if (params.page_id) {

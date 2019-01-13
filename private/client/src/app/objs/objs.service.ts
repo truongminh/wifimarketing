@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ContentNS } from 'src/app/domain/content';
-import { Subscription, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { ObjNS } from '../domain/obj';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, share, shareReplay } from 'rxjs/operators';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ObjsService {
 
   constructor(
@@ -21,31 +19,42 @@ export class ObjsService {
     switchMap(content => this.selectedPage$.pipe(
       map(selectedPage => content.pages[selectedPage])
     )),
-  )
+    shareReplay(1)
+  );
+
   focus$ = new BehaviorSubject<ObjNS.Obj>(null);
   propertyChange$ = new BehaviorSubject(null);
 
-  Patch(contentId: string, pageId: string, obj: ObjNS.Patch) {
-    this.repo.PatchObj(contentId, pageId, obj);
-    const focus = this.focus$.value;
-    if (focus && focus.id === obj.id) {
-      Object.assign(focus, obj);
-      this.focus$.next(focus);
-    }
+  Patch(obj: ObjNS.Patch) {
+    const content = this.content$.value;
+    const page = content.pages[this.selectedPage$.value];
+    this.repo.PatchObj(content.id, page.id, obj);
+    Object.assign(page.objs[obj.id], obj);
+    this.content$.next(content);
   }
 
-  Add(contentId: string, pageId: string, obj: ObjNS.Obj) {
-    this.repo.PatchObj(contentId, pageId, obj);
+  Add(obj: ObjNS.Obj) {
+    const content = this.content$.value;
+    const page = content.pages[this.selectedPage$.value];
+    this.repo.PatchPage(content.id, page);
+    ContentNS.AddObj(page, obj);
+    this.content$.next(content);
     this.focus$.next(obj);
   }
 
-  Delete(contentId: string, page: ContentNS.Page, obj: ObjNS.Obj) {
-    const focus = this.focus$.value;
-    if (focus && focus.id === obj.id) {
+  Delete(obj: ObjNS.Obj) {
+    const content = this.content$.value;
+    const page = content.pages[this.selectedPage$.value];
+    delete page.objs[obj.id];
+    this.repo.PatchPage(content.id, page);
+    this.content$.next(content);
+    if (this.IsFocus(obj.id)) {
       this.focus$.next(null);
     }
-    delete page.objs[obj.id];
-    this.repo.PatchPage(contentId, page);
+  }
+
+  IsFocus(objId: string) {
+    return this.focus$.value && this.focus$.value.id === objId;
   }
 
 }

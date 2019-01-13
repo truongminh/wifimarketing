@@ -19,8 +19,8 @@ export class PropertiesComponent {
   private subscription: Subscription;
 
   ngOnInit() {
-    this.subscription = this.objsService.page$.subscribe(page => {
-      this.obj = page.objs[this.objsService.focus$.value ? this.objsService.focus$.value.id : ''];
+    this.subscription = this.objsService.focus$.subscribe(focus => {
+      this.obj = focus;
     });
   }
 
@@ -31,6 +31,10 @@ export class PropertiesComponent {
 
   onPropertyChange() {
     this.objsService.content$.next(this.objsService.content$.value);
+  }
+
+  onDelete(obj: ObjNS.Obj) {
+    this.objsService.Delete(obj);
   }
 
 }

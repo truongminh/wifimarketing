@@ -18,6 +18,7 @@ export namespace ObjNS {
   interface Base<Attr> {
     id: string;
     name: string;
+    nth?: number;
     attrs: Attr;
     style?: Style;
     rect?: Rect;
