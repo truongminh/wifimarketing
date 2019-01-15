@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ContentNS } from 'src/app/domain/content';
 import { ObjsService } from '../../objs/objs.service';
 
@@ -9,19 +9,21 @@ import { ObjsService } from '../../objs/objs.service';
 })
 export class PageViewerComponent implements OnInit {
   pages: ContentNS.Page[];
-  contentId: string;
-  @Input() set content(data: ContentNS.Content) {
-    if (data) {
-      this.contentId = data.id;
-      this.pages = Object.keys(data.pages).map(id => data.pages[id]);
-    }
-  };
+  content: ContentNS.Content;
+  private setContent(content: ContentNS.Content) {
+    this.content = content;
+    this.pages = Object.values(content.pages);
+  }
+
   constructor(
     private repo: ContentNS.Repo,
     private objsService: ObjsService,
   ) { }
 
   ngOnInit() {
+    this.objsService.content$.subscribe(content => {
+      this.setContent(content);
+    });
   }
 
   addPage(el: HTMLInputElement) {
@@ -32,8 +34,9 @@ export class PageViewerComponent implements OnInit {
       name: pageName,
       objs: {}
     };
-    this.repo.PatchPage(this.contentId, page);
-    this.pages.push(page);
+    this.repo.PatchPage(this.content.id, page);
+    this.content.pages[page.id] = page;
+    this.setContent(this.content);
     el.value = '';
   }
 }

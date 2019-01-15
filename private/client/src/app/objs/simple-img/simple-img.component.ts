@@ -13,7 +13,8 @@ export class SimpleImgComponent implements OnInit {
   @Input() set data(d: ObjNS.Image) {
     const el = this.elRef.nativeElement as HTMLImageElement;
     const attrs = d.attrs || {};
-    el.src = attrs.src;
+    el.draggable = false;
+    el.src = attrs.src || 'https://via.placeholder.com/100';
   }
 
   ngOnInit() {
