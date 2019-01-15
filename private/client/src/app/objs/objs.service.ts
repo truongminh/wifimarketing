@@ -36,8 +36,8 @@ export class ObjsService {
   Add(obj: ObjNS.Obj) {
     const content = this.content$.value;
     const page = content.pages[this.selectedPage$.value];
-    this.repo.PatchPage(content.id, page);
     ContentNS.AddObj(page, obj);
+    this.repo.PatchPage(content.id, page);
     this.content$.next(content);
     this.focus$.next(obj);
   }

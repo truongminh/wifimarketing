@@ -2,21 +2,10 @@
   Page Viewer
 </div>
 
-<table>
-  <thead>
-    <th>ID</th>
-    <th>Name</th>
-  </thead>
-  <tbody>
-    <tr *ngFor="let p of pages">
-      <td>{{p.id}}</td>
-      <td>{{p.name}}</td>
-      <td>
-        <a [routerLink]="[{page_id: p.id}]">edit</a>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="page" *ngFor="let p of pages">
+  <span>{{p.name}}</span>
+  <a [routerLink]="[{page_id: p.id}]">edit</a>
+</div>
 
 <div>
   <input #pageName placeholder="Page Name">
