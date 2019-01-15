@@ -1,0 +1,5 @@
+<div *ngIf="objsService.focus$ | async; let obj" class="border" style="width: 100%; height: 100px;">
+    <div [ngSwitch]="obj?.type">
+        <app-simple-text-prop *ngSwitchCase="'text'"></app-simple-text-prop>
+    </div>
+</div>

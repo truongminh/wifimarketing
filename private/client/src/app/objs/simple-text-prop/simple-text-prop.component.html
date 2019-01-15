@@ -1,0 +1,16 @@
+<div *ngIf="obj" (change)="onPropChange()">
+  <span>Name</span>
+  <input type="text" [(ngModel)]="obj.name">
+  <span>Text</span>
+  <input type="text" [(ngModel)]="obj.attrs.text">
+
+  <hr>
+  <span>Color</span>
+  <input type="text" [(ngModel)]="obj.style.color">
+  <span>Font Size</span>
+  <input type="text" [(ngModel)]="obj.style.fontSize">
+  <span>Font Weight</span>
+  <input type="text" [(ngModel)]="obj.style.fontWeight">
+  <span>Z Index</span>
+  <input type="text" [(ngModel)]="obj.style.zIndex">
+</div>

@@ -12,11 +12,12 @@ import { ObjsService } from '../objs/objs.service';
 import { SimpleTextComponent } from '../objs/simple-text/simple-text.component';
 import { SimpleImgComponent } from '../objs/simple-img/simple-img.component';
 import { StatusComponent } from './status/status.component';
+import { ObjPropComponent } from './obj-prop/obj-prop.component';
 
 @NgModule({
   declarations: [
     HeaderComponent, ObjectPannelComponent, PropertiesComponent,
-    PageViewerComponent, DeskComponent, StatusComponent
+    PageViewerComponent, DeskComponent, StatusComponent, ObjPropComponent
   ],
   imports: [
     CommonModule, RouterModule, FormsModule, ObjsModule,
