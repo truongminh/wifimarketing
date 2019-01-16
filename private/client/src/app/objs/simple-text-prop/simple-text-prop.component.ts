@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ObjsService } from '../objs.service';
 import { ObjNS } from 'src/app/domain/obj';
@@ -14,23 +14,18 @@ export class SimpleTextPropComponent {
     private objsService: ObjsService,
   ) { }
 
-  obj: ObjNS.Text;
-  private subscription: Subscription;
+  @Input() obj: ObjNS.Text;
 
   ngOnInit() {
-    this.subscription = this.objsService.focus$.subscribe(textOBJ => { this.obj = textOBJ as ObjNS.Text });
+
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
-    this.subscription = null;
+
   }
 
   onPropChange() {
-    const newContent = this.objsService.content$.value;
-    newContent.pages[this.objsService.selectedPage$.value].objs[this.objsService.focus$.value.id] = this.obj;
-    this.objsService.content$.next(newContent);
-    this.objsService.focus$.next(this.obj);
+    this.objsService.Patch(this.obj);
   }
 
 }
