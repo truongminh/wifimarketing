@@ -1,4 +1,5 @@
-const data = {
+import { ContentNS } from './domain/content';
+const data: ContentNS.Content = {
   id: 'pb1ubc',
   name: 'aaaaa',
   pages: {
@@ -46,15 +47,9 @@ Object.keys(curentPage.objs).forEach(key => {
 })
 
 function appenText(obj) {
-  const textEl = document.createElement('span');
-  textEl.id = obj.id;
+  let textEl = document.createElement('span');
+  textEl = setCommonStyle(obj, textEl);
   textEl.innerText = obj.attrs.text;
-  textEl.style.position = 'absolute';
-  textEl.style.top = obj.rect.x + 'px';
-  textEl.style.left = obj.rect.y + 'px';
-  textEl.style.border = '1px solid #000';
-  textEl.style.width = obj.rect.w + 'px';
-  textEl.style.height = obj.rect.h + 'px';
   Object.keys(obj.style).forEach(styleName => {
     textEl.style[styleName] = obj.style[styleName];
   });
@@ -63,4 +58,15 @@ function appenText(obj) {
 
 function appenImg(obj) {
 
+}
+
+function setCommonStyle(obj, htmlEl) {
+  htmlEl.id = obj.id;
+  htmlEl.style.position = 'absolute';
+  htmlEl.style.top = obj.rect.x + 'px';
+  htmlEl.style.left = obj.rect.y + 'px';
+  htmlEl.style.border = '1px solid #000';
+  htmlEl.style.width = obj.rect.w + 'px';
+  htmlEl.style.height = obj.rect.h + 'px';
+  return htmlEl;
 }
