@@ -1,5 +1,5 @@
 import { GetSessionUser } from '@auth/service';
-import { IContentCreate, IContentUpdate } from '@service/contents';
+import { ContentNS } from '@service/contents';
 import { Server } from 'hapi';
 import * as Joi from 'joi';
 import { GetContentRepo } from './content_context';
@@ -19,7 +19,7 @@ export async function SetContentsApiRoutes(server: Server) {
         },
         handler(request, h) {
             const { org_id } = GetSessionUser(request);
-            const payload = request.payload as IContentCreate;
+            const payload = request.payload as ContentNS.IContentCreate;
             payload.org_id = org_id;
             return repo.Create(payload);
         },
@@ -52,19 +52,13 @@ export async function SetContentsApiRoutes(server: Server) {
                 payload: {
                     name: Joi.string().min(3).optional()
                         .error((e) => 'Content name must be at least 3 characters'),
-                    pages: Joi.array().items({
-                        elements: Joi.array().optional(),
-                    }),
-                    viewport: Joi.object({
-                        width: Joi.number().required(),
-                        height: Joi.number().required(),
-                    }).optional(),
+                    pages: Joi.object().optional(),
                 },
             },
         },
         handler(request, h) {
             const { id } = request.params;
-            const payload = request.payload as IContentUpdate;
+            const payload = request.payload as ContentNS.IContentUpdate;
             return repo.Update(id, payload);
         },
     });

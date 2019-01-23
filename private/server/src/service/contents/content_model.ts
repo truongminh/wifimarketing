@@ -1,32 +1,30 @@
-export interface IContentPage {}
+import { ObjNS } from "./obj";
 
-export interface IContentViewport {
-    width: number;
-    height: number;
-}
+export namespace ContentNS {
+    export interface Page {
+        id: string;
+        name: string;
+        objs: { [index: string]: ObjNS.Obj };
+    }
 
-export interface IContent {
-    id: string;
-    org_id: string;
-    name: string;
-    pages: IContentPage[];
-    viewport: IContentViewport;
-}
+    export interface Content {
+        id: string;
+        name: string;
+        org_id: string;
+        pages: { [index: string]: Page };
+    }
 
-export interface IContentCreate {
-    org_id: string;
-    name: string;
-}
+    export interface IContentCreate {
+        name: string;
+        org_id: string;
+    }
 
-export interface IContentUpdate {
-    name: string;
-    pages: IContentPage[];
-    viewport: IContentViewport;
-}
+    export type IContentUpdate = Partial<Content>;
 
-export interface IContentRepo {
-    Create(data: IContentCreate): Promise<string>;
-    Read(id: string): Promise<IContent>;
-    Update(id: string, data: Partial<IContentUpdate>): Promise<number>;
-    ByOrg(org_id: string): Promise<IContent[]>;
+    export interface Repo {
+        Create(data: IContentCreate): Promise<string>;
+        Read(id: string): Promise<Content>;
+        Update(id: string, data: IContentUpdate): Promise<number>;
+        ByOrg(org_id: string): Promise<Content[]>;
+    }
 }
